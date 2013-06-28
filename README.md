@@ -1,29 +1,26 @@
-# Stripe::Cli
+# Stripe::CLI
 
-TODO: Write a gem description
+stripe-cli is a command line interface to [Stripe](https://stripe.com).
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'stripe-cli'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
     $ gem install stripe-cli
+
+For authentication, either pass your secret key using the `-k` option, or create a `~/.stripecli` file containing:
+
+    key = sk_your_key
 
 ## Usage
 
-TODO: Write usage instructions here
+  $ stripe
 
-## Contributing
+    Commands:
+      stripe charges         # /charges
+      stripe customers       # /customers
+      stripe events          # /events
+      stripe plans           # /plans
 
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+  $ stripe charges list
+  $ stripe charges find ch_123
+  $ stripe charges refund ch_123
+  $ stripe charges create
