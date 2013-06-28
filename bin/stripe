@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'stripe/cli'
+Stripe::CLI::Runner.start
