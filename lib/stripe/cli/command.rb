@@ -1,3 +1,5 @@
+require 'parseconfig'
+
 module Stripe
   module CLI
     class Command < Thor
@@ -6,7 +8,17 @@ module Stripe
       protected
 
       def api_key
-        options[:key]
+        @api_key ||= options[:key] || stored_api_key
+      end
+
+      def stored_api_key
+        if File.exists?(config_file)
+          ParseConfig.new(config_file)['key']
+        end
+      end
+
+      def config_file
+        File.expand_path('~/.stripecli')
       end
 
       def inspect(object)

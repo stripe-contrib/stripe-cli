@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor", "~> 0.18.1"
   spec.add_dependency "stripe", "~> 1.8.3"
   spec.add_dependency "awesome_print"
+  spec.add_dependency "parseconfig"
 end
