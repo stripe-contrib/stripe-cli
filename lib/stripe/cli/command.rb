@@ -1,6 +1,8 @@
 module Stripe
   module CLI
     class Command < Thor
+      class_option :key, :aliases => :k
+
       protected
 
       def api_key

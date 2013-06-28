@@ -3,29 +3,25 @@ module Stripe
     module Commands
       class Charges < Command
         desc "list", "List charges"
-        option :key, :aliases => :k
+        option :count
+        option :customer
+        option :offset
 
         def list
-          output Stripe::Charge.all({}, api_key)
+          output Stripe::Charge.all(options, api_key)
         end
 
         desc "find ID", "Find a charge"
-        option :key, :aliases => :k
-
         def find(charge_id)
           output Stripe::Charge.retrieve(charge_id, api_key)
         end
 
         desc "refund ID", "Refund a charge"
-        option :key, :aliases => :k
-
         def refund(charge_id)
           output Stripe::Charge.new(charge_id, api_key).refund
         end
 
         desc "capture ID", "Capture a charge"
-        option :key, :aliases => :k
-
         def capture(charge_id)
           output Stripe::Charge.new(charge_id, api_key).capture
         end
