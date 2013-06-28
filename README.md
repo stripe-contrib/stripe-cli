@@ -12,15 +12,15 @@ For authentication, either pass your secret key using the `-k` option, or create
 
 ## Usage
 
-  $ stripe
+    $ stripe
 
-    Commands:
-      stripe charges         # /charges
-      stripe customers       # /customers
-      stripe events          # /events
-      stripe plans           # /plans
+      Commands:
+        stripe charges         # /charges
+        stripe customers       # /customers
+        stripe events          # /events
+        stripe plans           # /plans
 
-  $ stripe charges list
-  $ stripe charges find ch_123
-  $ stripe charges refund ch_123
-  $ stripe charges create
+    $ stripe charges list
+    $ stripe charges find ch_123
+    $ stripe charges refund ch_123
+    $ stripe charges create
