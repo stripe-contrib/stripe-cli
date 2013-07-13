@@ -4,7 +4,7 @@ module Stripe
   module CLI
     class Command < Thor
       class_option :key, :aliases => :k
-
+      class_option :mode, :aliases => :m
       protected
 
       def api_key
@@ -13,7 +13,13 @@ module Stripe
 
       def stored_api_key
         if File.exists?(config_file)
-          ParseConfig.new(config_file)['key']
+          config = ParseConfig.new(config_file)
+          groups = config.get_groups
+          if groups.empty?
+            config['key']
+          else
+            config[ options.delete(:mode)||groups[0] ]['key']
+          end
         end
       end
 
