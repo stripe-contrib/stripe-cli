@@ -4,7 +4,7 @@ module Stripe
   module CLI
     class Command < Thor
       class_option :key, :aliases => :k
-      class_option :mode, :aliases => :m
+      class_option :env, :aliases => :e
       class_option :version, :aliases => :v
       protected
 
@@ -13,23 +13,66 @@ module Stripe
       end
 
       def api_version
-        @api_version ||= options[:version] || stored_api_option('version')
+        @api_version ||= options.delete(:version) || stored_api_option('version')
       end
 
-      def stored_api_option key
+      def environment
+        @env ||= options.delete(:env) || config['default']
+      end
+
+      def stored_api_option option
         if File.exists?(config_file)
-          config = ParseConfig.new(config_file)
-          groups = config.get_groups
-          if groups.empty?
-            config[key]
+          if environment
+            config[environment][option.to_s]
           else
-            config[ options.delete(:mode)||groups[0] ][key]
+            config[option.to_s]
           end
         end
       end
 
+      def config
+        ParseConfig.new(config_file) if File.exists?(config_file)
+      end
+
       def config_file
         File.expand_path('~/.stripecli')
+      end
+
+      def list(klass, options)
+        execute klass.all(options, api_key)
+      end
+
+      def find(klass, id)
+        execute klass.retrieve(id, api_key)
+      end
+
+      def delete(klass, id)
+        execute klass.new(id, api_key).delete
+      end
+
+			def create klass, options
+				execute klass.create( options, api_key )
+			end
+
+			def method_missing name, *args, &block
+				klass = args.shift
+				define_singleton_method name do
+					execute klass.new( *args ).send( name )
+				end
+			end
+
+		private
+
+			def execute operation
+				Stripe.api_version = api_version unless api_version.nil?
+				output operation
+			end
+
+      def output(objects)
+        ap(
+          inspect(objects),
+          :indent => -2
+        )
       end
 
       def inspect(object)
@@ -48,13 +91,6 @@ module Stripe
         else
           object
         end
-      end
-
-      def output(objects)
-        ap(
-          inspect(objects),
-          :indent => -2
-        )
       end
     end
   end

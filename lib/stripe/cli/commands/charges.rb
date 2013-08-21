@@ -7,26 +7,22 @@ module Stripe
         option :customer
         option :offset
         def list
-          Stripe.api_version = api_version unless api_version.nil?
-          output Stripe::Charge.all(options, api_key)
+          super Stripe::Charge, options
         end
 
         desc "find ID", "Find a charge"
-        def find(charge_id)
-          Stripe.api_version = api_version unless api_version.nil?
-          output Stripe::Charge.retrieve(charge_id, api_key)
+        def find charge_id
+        	super Stripe::Charge, charge_id
         end
 
         desc "refund ID", "Refund a charge"
-        def refund(charge_id)
-          Stripe.api_version = api_version unless api_version.nil?
-          output Stripe::Charge.new(charge_id, api_key).refund
+        def refund charge_id
+          super Stripe::Charge, charge_id
         end
 
         desc "capture ID", "Capture a charge"
-        def capture(charge_id)
-          Stripe.api_version = api_version unless api_version.nil?
-          output Stripe::Charge.new(charge_id, api_key).capture
+        def capture charge_id
+          super Stripe::Charge, charge_id
         end
 
         desc "create", "Create a charge"
@@ -39,35 +35,29 @@ module Stripe
         option :amount, :type => :numeric
         option :currency, :default => 'usd'
         option :description
-        option :capture, :type => :boolean
+        option :capture, :type => :boolean, :default => true
 
         def create
           options[:amount] ||= ask('Amount in dollars:')
           options[:amount] = (Float(options[:amount]) * 100).to_i
 
           unless options[:card]
+            options[:card_name]      ||= ask('Name on Card:')
             options[:card_number]    ||= ask('Card number:')
-            options[:card_exp_month] ||= ask('Card exp month:')
-            options[:card_exp_year]  ||= ask('Card exp year:')
-            options[:card_cvc]       ||= ask('Card CVC:')
-            options[:card_name]      ||= ask('Card name:')
+            options[:card_cvc]       ||= ask('CVC code:')
+            options[:card_exp_month] ||= ask('expiration month:')
+            options[:card_exp_year]  ||= ask('expiration year:')
 
             options[:card] = {
-              :number    => options[:card_number],
-              :exp_month => options[:card_exp_month],
-              :exp_year  => options[:card_exp_year],
-              :cvc       => options[:card_cvc],
-              :name      => options[:card_name]
+              :number    => options.delete(:card_number),
+              :exp_month => options.delete(:card_exp_month),
+              :exp_year  => options.delete(:card_exp_year),
+              :cvc       => options.delete(:card_cvc),
+              :name      => options.delete(:card_name)
             }
-
-            options.delete(:card_number)
-            options.delete(:card_exp_month)
-            options.delete(:card_exp_year)
-            options.delete(:card_cvc)
-            options.delete(:card_name)
           end
-          Stripe.api_version = api_version unless api_version.nil?
-          output Stripe::Charge.create(options, api_key)
+
+          super Stripe::Charge, options
         end
       end
     end

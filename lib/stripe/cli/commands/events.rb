@@ -7,12 +7,12 @@ module Stripe
         option :offset
 
         def list
-          output Stripe::Event.all(options, api_key)
+          super Stripe::Event, options
         end
 
         desc "find ID", "Find a event`"
-        def find(event_id)
-          output Stripe::Event.retrieve(event_id, api_key)
+        def find event_id
+          super Stripe::Event, event_id
         end
       end
     end
