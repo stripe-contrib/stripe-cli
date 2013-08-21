@@ -5,20 +5,25 @@ module Stripe
     class Command < Thor
       class_option :key, :aliases => :k
       class_option :mode, :aliases => :m
+      class_option :version, :aliases => :v
       protected
 
       def api_key
-        @api_key ||= options[:key] || stored_api_key
+        @api_key ||= options[:key] || stored_api_option('key')
       end
 
-      def stored_api_key
+      def api_version
+        @api_version ||= options[:version] || stored_api_option('version')
+      end
+
+      def stored_api_option key
         if File.exists?(config_file)
           config = ParseConfig.new(config_file)
           groups = config.get_groups
           if groups.empty?
-            config['key']
+            config[key]
           else
-            config[ options.delete(:mode)||groups[0] ]['key']
+            config[ options.delete(:mode)||groups[0] ][key]
           end
         end
       end
