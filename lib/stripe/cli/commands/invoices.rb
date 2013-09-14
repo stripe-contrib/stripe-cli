@@ -18,12 +18,12 @@ module Stripe
 
 				desc "close ID", "close an unpaid invoice"
 				def close invoice_id
-					super Stripe::Invoice, invoice_id
+					special Stripe::Invoice, :close, invoice_id
 				end
 
 				desc "pay ID", "trigger an open invoice to be paid immediately"
 				def pay invoice_id
-					super Stripe::Invoice, invoice_id
+					special Stripe::Invoice, :pay, invoice_id
 				end
       end
     end

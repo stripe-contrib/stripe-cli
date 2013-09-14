@@ -17,12 +17,12 @@ module Stripe
 
         desc "refund ID", "Refund a charge"
         def refund charge_id
-          super Stripe::Charge, charge_id
+          special Stripe::Charge, :refund, charge_id
         end
 
         desc "capture ID", "Capture a charge"
         def capture charge_id
-          super Stripe::Charge, charge_id
+          special Stripe::Charge, :capture, charge_id
         end
 
         desc "create", "Create a charge"

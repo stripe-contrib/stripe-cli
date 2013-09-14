@@ -39,34 +39,31 @@ module Stripe
       end
 
       def list(klass, options)
-        execute klass.all(options, api_key)
+        Stripe.api_version = api_version unless api_version.nil?
+        output klass.all(options, api_key)
       end
 
       def find(klass, id)
-        execute klass.retrieve(id, api_key)
+        Stripe.api_version = api_version unless api_version.nil?
+        output klass.retrieve(id, api_key)
       end
 
       def delete(klass, id)
-        execute klass.new(id, api_key).delete
+        Stripe.api_version = api_version unless api_version.nil?
+        output klass.new(id, api_key).delete
       end
 
-			def create klass, options
-				execute klass.create( options, api_key )
-			end
+      def create klass, options
+        Stripe.api_version = api_version unless api_version.nil?
+      	output klass.create( options, api_key )
+      end
 
-			def method_missing name, *args, &block
-				klass = args.shift
-				define_singleton_method name do
-					execute klass.new( *args ).send( name )
-				end
-			end
+      def special klass, method, options
+        Stripe.api_version = api_version unless api_version.nil?
+        output klass.new( options, api_key ).send( method )
+      end
 
-		private
-
-			def execute operation
-				Stripe.api_version = api_version unless api_version.nil?
-				output operation
-			end
+    private
 
       def output(objects)
         ap(
