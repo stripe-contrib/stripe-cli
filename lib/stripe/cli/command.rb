@@ -38,24 +38,24 @@ module Stripe
         File.expand_path('~/.stripecli')
       end
 
-      def list(klass, options)
+      def list klass, options
         Stripe.api_version = api_version unless api_version.nil?
-        output klass.all(options, api_key)
+        output klass.all( options, api_key )
       end
 
-      def find(klass, id)
+      def find klass, id
         Stripe.api_version = api_version unless api_version.nil?
-        output klass.retrieve(id, api_key)
+        output klass.retrieve( id, api_key )
       end
 
-      def delete(klass, id)
+      def delete klass, id
         Stripe.api_version = api_version unless api_version.nil?
-        output klass.new(id, api_key).delete
+        output klass.new( id, api_key ).delete
       end
 
       def create klass, options
         Stripe.api_version = api_version unless api_version.nil?
-      	output klass.create( options, api_key )
+        output klass.create( options, api_key )
       end
 
       def special klass, method, options
@@ -65,20 +65,17 @@ module Stripe
 
     private
 
-      def output(objects)
-        ap(
-          inspect(objects),
-          :indent => -2
-        )
+      def output objects
+        ap inspect( objects ), :indent => -2
       end
 
-      def inspect(object)
+      def inspect object
         case object
         when Array
           object.map {|o| inspect(o) }
         when Hash
           object.inject({}) do |hash, (key, value)|
-            hash[key] = inspect(value)
+            hash[key] = inspect( value )
             hash
           end
         when Stripe::ListObject
