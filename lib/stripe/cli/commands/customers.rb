@@ -20,14 +20,14 @@ module Stripe
           super Stripe::Customer, customer_id
         end
 
-				desc "create", "Create a new customer"
-				option :description
-				option :email
-				option :plan
-				option :coupon
-				option :quantity
-				option :trial_end
-				option :account_balance
+        desc "create", "Create a new customer"
+        option :description
+        option :email
+        option :plan
+        option :coupon
+        option :quantity
+        option :trial_end
+        option :account_balance
         option :card
         option :card_number
         option :card_exp_month
@@ -35,11 +35,12 @@ module Stripe
         option :card_cvc
         option :card_name
 
-				def create
-					options[:email]  ||= ask('Customer\'s Email:')
-					options[:description] ||= ask('(Optional) Provide a description:')
-					options[:plan]   ||= ask('(Optional) Assign customer a plan:')
-					options[:coupon] ||= ask('(Optional) Apply a coupon:')
+        def create
+          say('All of the following are OPTIONAL parameters...')
+          options[:email]  ||= ask('Customer\'s Email:')
+          options[:description] ||= ask('Provide a description:')
+          options[:plan]   ||= ask('Assign a plan:')
+          options[:coupon] ||= ask('Apply a coupon:')
 
           if options[:plan]
             options[:card_name]      ||= ask('Name on Card:')
@@ -57,8 +58,8 @@ module Stripe
             }
           end unless options[:card]
 
-					super Stripe::Customer, options
-				end
+          super Stripe::Customer, options
+        end
       end
     end
   end

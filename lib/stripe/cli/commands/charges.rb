@@ -26,6 +26,7 @@ module Stripe
         end
 
         desc "create", "Create a charge"
+        option :customer
         option :card
         option :card_number
         option :card_exp_month
@@ -41,7 +42,7 @@ module Stripe
           options[:amount] ||= ask('Amount in dollars:')
           options[:amount] = (Float(options[:amount]) * 100).to_i
 
-          unless options[:card]
+          unless options[:card] || options[:customer]
             options[:card_name]      ||= ask('Name on Card:')
             options[:card_number]    ||= ask('Card number:')
             options[:card_cvc]       ||= ask('CVC code:')

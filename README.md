@@ -35,66 +35,85 @@ You may also overide the default environment setting in your config file by pass
       Commands:
         stripe balance_transaction  # /balance_transactions
         stripe charges              # /charges
+        stripe tokens               # /tokens
         stripe customers            # /customers
         stripe events               # /events
         stripe plans                # /plans
         stripe coupons              # /coupons
         stripe invoices             # /invoices
 
-Any parameters available in the stripe api are acceptable options to pass into commands
+Any parameters accepted by the stripe api are acceptable options to pass into commands
 
-    $ stripe charges create [--amount=AMOUNT][--description=DESC][--card_number=NUM][--card_cvc=CVC]
+    $ stripe charges create [--amount=AMOUNT][--description=DESC][--card_number=NUM][--card_cvc=CVC][--card_exp_month=MM][--card_exp_year=YYYY]
 
-Passing in NO options, will trigger an interactive menu
+or
+
+    $ stripe charges create [--amount=AMOUNT][--card=TOKEN_ID]
+
+or
+
+    $ stripe charges create [--amount=AMOUNT][--customer=CUST_ID]
+
+Passing NO (or partial) arguments, will trigger an interactive menu
 
     $ stripe charges create
     Amount in dollars: __
 
+or
+
+    $ stripe charges create [--amount=AMOUNT]
+    Name on Card: __
+
 ### Charges
 
-    $ stripe charges list [--count=COUNT][--offset=OFFSET]
-    $ stripe charges find ch_123
-    $ stripe charges refund ch_123
-    $ stripe charges capture ch_123
-    $ stripe charges create
+    $ stripe charge list [--count=COUNT][--offset=OFFSET]
+    $ stripe charge find ch_123
+    $ stripe charge refund ch_123
+    $ stripe charge capture ch_123
+    $ stripe charge create
+
+### Tokens
+
+    $ stripe token find tok_123
+    $ stripe token create TYPE (bank_account or credit_card)
 
 ### Customers
 
-    $ stripe customers list [--count=COUNT][--offset=OFFSET]
-    $ stripe customers find cust_123
-    $ stripe customers delete cust_123
-    $ stripe customers create
+    $ stripe customer list [--count=COUNT][--offset=OFFSET]
+    $ stripe customer find cust_123
+    $ stripe customer delete cust_123
+    $ stripe customer create
 
 ### Invoices
 
-    $ stripe invoices list [--count=COUNT][--offset=OFFSET][--customer=CUST_ID]
-    $ stripe invoices find inv_123
-    $ stripe invoices close inv_123
-    $ stripe invoices pay inv_123
+    $ stripe invoice list [--count=COUNT][--offset=OFFSET][--customer=CUST_ID]
+    $ stripe invoice find inv_123
+    $ stripe invoice close inv_123
+    $ stripe invoice pay inv_123
 
 ### Plans
 
-    $ stripe plans list [--count=COUNT][--offset=OFFSET]
-    $ stripe plans find custom_plan_id
-    $ stripe plans delete custom_plan_id
-    $ stripe plans create
+    $ stripe plan list [--count=COUNT][--offset=OFFSET]
+    $ stripe plan find custom_plan_id
+    $ stripe plan delete custom_plan_id
+    $ stripe plan create
 
 ### Coupons
 
-    $ stripe coupons list [--count=COUNT][--offset=OFFSET]
-    $ stripe coupons find 25_off
-    $ stripe coupons delete 25_off
-    $ stripe coupons create
+    $ stripe coupon list [--count=COUNT][--offset=OFFSET]
+    $ stripe coupon find 25_off
+    $ stripe coupon delete 25_off
+    $ stripe coupon create
 
 ### Events
 
-    $ stripe events list [--count=COUNT][--offset=OFFSET]
-    $ stripe events find ev_123
+    $ stripe event list [--count=COUNT][--offset=OFFSET]
+    $ stripe event find ev_123
 
 ### BalanceTransactions
 
-    $ stripe balance_transactions list [--count=COUNT][--offset=OFFSET]
-    $ stripe balance_transactions find trx_123
+    $ stripe balance_transaction list [--count=COUNT][--offset=OFFSET]
+    $ stripe balance_transaction find trx_123
 
 more to come soon
 

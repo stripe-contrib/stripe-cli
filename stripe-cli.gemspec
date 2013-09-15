@@ -25,5 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "stripe", "~> 1.8.6"
   spec.add_dependency "awesome_print"
   spec.add_dependency "parseconfig"
+	spec.add_dependency "chronic"
   spec.add_dependency "rspec"
 end
