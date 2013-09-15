@@ -2,6 +2,10 @@
 
 stripe-cli is a command line interface to [Stripe](https://stripe.com).
 
+Uses [AwesomePrint](https://github.com/michaeldv/awesome_print) to provide very readable output on your command line.
+
+![example output](./output.png)
+
 ## Installation
 
     $ gem install stripe-cli
