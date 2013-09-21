@@ -9,6 +9,7 @@ module Stripe
       register Commands::Events, 'events', 'events', '/events'
       register Commands::Invoices, 'invoices', 'invoices', '/invoices'
       register Commands::BalanceTransactions, 'balance_transactions', 'balance_transactions', '/balance_transactions'
+      register Commands::Recipients, 'recipients', 'recipients', '/recipients'
     end
   end
 end

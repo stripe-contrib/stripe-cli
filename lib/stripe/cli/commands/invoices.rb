@@ -4,7 +4,7 @@ module Stripe
       class Invoices < Command
         desc "list", "List invoices"
         option :count
-				option :customer
+        option :customer
         option :offset
 
         def list
@@ -16,15 +16,20 @@ module Stripe
           super Stripe::Invoice, invoice_id
         end
 
-				desc "close ID", "close an unpaid invoice"
-				def close invoice_id
-					special Stripe::Invoice, :close, invoice_id
-				end
+        desc "close ID", "close an unpaid invoice"
+        def close invoice_id
+          special Stripe::Invoice, :close, invoice_id
+        end
 
-				desc "pay ID", "trigger an open invoice to be paid immediately"
-				def pay invoice_id
-					special Stripe::Invoice, :pay, invoice_id
-				end
+        desc "pay ID", "trigger an open invoice to be paid immediately"
+        def pay invoice_id
+          special Stripe::Invoice, :pay, invoice_id
+        end
+
+        desc "upcoming CUSTOMER", "find the upcoming invoice for CUSTOMER"
+        def upcoming customer_id
+          special Stripe::Invoice, :upcoming, {:customer => customer_id}
+        end
       end
     end
   end

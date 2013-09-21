@@ -36,13 +36,14 @@ You may also overide the default environment setting in your config file by pass
         stripe balance_transaction  # /balance_transactions
         stripe charges              # /charges
         stripe tokens               # /tokens
+        stripe recipients           # /recipients
         stripe customers            # /customers
         stripe events               # /events
         stripe plans                # /plans
         stripe coupons              # /coupons
         stripe invoices             # /invoices
 
-Any parameters accepted by the stripe api are acceptable options to pass into commands
+Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands
 
     $ stripe charges create [--amount=AMOUNT][--description=DESC][--card_number=NUM][--card_cvc=CVC][--card_exp_month=MM][--card_exp_year=YYYY]
 
@@ -53,6 +54,20 @@ or
 or
 
     $ stripe charges create [--amount=AMOUNT][--customer=CUST_ID]
+
+## uniform behavior
+
+The Stripe API is very consistant. Consistency makes using the api intuitive. This utility strives to maintain Stripe's consistency. Depending on which [C.R.U.D.](http://wikipedia.org/wiki/Create,_read,_update_and_delete) operation you are after, you can pretty much count on a few standard options to be available.
+
+### stripe (subcommand) list ...
+
+specify how many results, between 1 and 100, should be returned (default is 10)
+
+    ... list [--count=COUNT]
+
+specify the starting index for this result set, relative to the entire result set (usefull in combination with `--count` for paginating results)
+
+    ... list [--offset=OFFSET]
 
 Passing NO (or partial) arguments, will trigger an interactive menu
 
@@ -66,7 +81,7 @@ or
 
 ### Charges
 
-    $ stripe charge list [--count=COUNT][--offset=OFFSET]
+    $ stripe charges list
     $ stripe charge find ch_123
     $ stripe charge refund ch_123
     $ stripe charge capture ch_123
@@ -79,43 +94,62 @@ or
 
 ### Customers
 
-    $ stripe customer list [--count=COUNT][--offset=OFFSET]
+    $ stripe customers list
     $ stripe customer find cust_123
     $ stripe customer delete cust_123
     $ stripe customer create
 
 ### Invoices
 
-    $ stripe invoice list [--count=COUNT][--offset=OFFSET][--customer=CUST_ID]
+    $ stripe invoices list [--customer=CUST_ID]
     $ stripe invoice find inv_123
     $ stripe invoice close inv_123
     $ stripe invoice pay inv_123
+    $ stripe invoice upcoming cust_123
 
 ### Plans
 
-    $ stripe plan list [--count=COUNT][--offset=OFFSET]
+    $ stripe plans list
     $ stripe plan find custom_plan_id
     $ stripe plan delete custom_plan_id
     $ stripe plan create
 
 ### Coupons
 
-    $ stripe coupon list [--count=COUNT][--offset=OFFSET]
+    $ stripe coupons list
     $ stripe coupon find 25_off
     $ stripe coupon delete 25_off
     $ stripe coupon create
 
 ### Events
 
-    $ stripe event list [--count=COUNT][--offset=OFFSET]
+    $ stripe events list
     $ stripe event find ev_123
 
 ### BalanceTransactions
 
-    $ stripe balance_transaction list [--count=COUNT][--offset=OFFSET]
+    $ stripe balance_transactions list [--type=TYPE][--source=SOURCE_ID]
     $ stripe balance_transaction find trx_123
 
-more to come soon
+### Recipients
+
+    $ stripe recipients list [--verified]
+    $ stripe recipient find recip_123
+    $ stripe recipient delete recip_123
+    $ stripe recipient create
+
+
+## Road Map
+
+1. support for transfers command suite
+1. test coverage, test coverage, test coverage!
+1. `--date` filters for all `list` operations
+1. `update` command operations
+1. support for `disputes` & dispute handling
+1. support creating/updating config file through cli
+1. plug-able output formating for use in scripts and such
+1. request a feature you would like via the issue tracker
+
 
 pull requests welcome
 

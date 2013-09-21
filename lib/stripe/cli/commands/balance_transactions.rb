@@ -5,6 +5,8 @@ module Stripe
         desc "list", "List transactions"
         option :count
         option :offset
+        option :type, :enum => %w( charge refund adjustment application_fee application_fee_refund transfer transfer_failure )
+        option :source
 
         def list
           super Stripe::BalanceTransaction, options

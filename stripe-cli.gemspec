@@ -6,9 +6,9 @@ require 'stripe/cli/version'
 Gem::Specification.new do |spec|
   spec.name          = "stripe-cli"
   spec.version       = Stripe::CLI::VERSION
-  spec.authors       = ["Alex MacCaw"]
-  spec.email         = ["alex@stripe.com"]
-  spec.description   = %q{Command line interface to Stripe}
+  spec.authors       = ["Alex MacCaw", "Andy Cohen"]
+  spec.email         = ["alex@stripe.com", "outlawandy@gmail.com"]
+  spec.description   = %q{A `GIT style` Command line utility for accessing the Stripe API}
   spec.summary       = %q{Command line interface to Stripe}
   spec.homepage      = "https://stripe.com"
   spec.license       = "MIT"
@@ -25,6 +25,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "stripe", "~> 1.8.6"
   spec.add_dependency "awesome_print"
   spec.add_dependency "parseconfig"
-	spec.add_dependency "chronic"
-  spec.add_dependency "rspec"
+  spec.add_dependency "chronic"
+  spec.add_development_dependency "rspec"
 end
