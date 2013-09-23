@@ -8,7 +8,8 @@ module Stripe
       autoload :Coupons, 'stripe/cli/commands/coupons'
       autoload :Events, 'stripe/cli/commands/events'
       autoload :Invoices, 'stripe/cli/commands/invoices'
-      autoload :BalanceTransactions, 'stripe/cli/commands/balance_transactions'
+      autoload :Transactions, 'stripe/cli/commands/transactions'
+      autoload :Balance, 'stripe/cli/commands/balance'
       autoload :Recipients, 'stripe/cli/commands/recipients'
     end
   end

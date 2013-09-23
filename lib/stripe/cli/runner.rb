@@ -1,15 +1,16 @@
 module Stripe
   module CLI
     class Runner < Thor
-      register Commands::Charges, 'charges', 'charges', '/charges'
-      register Commands::Customers, 'customers', 'customers', '/customers'
-      register Commands::Tokens, 'tokens', 'tokens', '/tokens'
-      register Commands::Plans, 'plans', 'plans', '/plans'
-      register Commands::Coupons, 'coupons', 'coupons', '/coupons'
-      register Commands::Events, 'events', 'events', '/events'
-      register Commands::Invoices, 'invoices', 'invoices', '/invoices'
-      register Commands::BalanceTransactions, 'balance_transactions', 'balance_transactions', '/balance_transactions'
-      register Commands::Recipients, 'recipients', 'recipients', '/recipients'
+      register Commands::Charges, 'charges', 'charges', 'find, list, create, capture, & refund charges'
+      register Commands::Customers, 'customers', 'customers', 'find, list, create, & delete customers'
+      register Commands::Tokens, 'tokens', 'tokens', 'find & create tokens for bank accounts & credit cards'
+      register Commands::Plans, 'plans', 'plans', 'find, list, create, & delete plans'
+      register Commands::Coupons, 'coupons', 'coupons', 'find, list, create, & delete coupons'
+      register Commands::Events, 'events', 'events', 'find & list events'
+      register Commands::Invoices, 'invoices', 'invoices', 'find, list, pay, and close invoices'
+      register Commands::Transactions, 'transactions', 'transactions', 'find & list balance transactions'
+      register Commands::Balance, 'balance', 'balance', 'show currently available and pending balance amounts'
+      register Commands::Recipients, 'recipients', 'recipients', 'list, find, create & delete recipients'
     end
   end
 end

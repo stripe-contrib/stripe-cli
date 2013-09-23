@@ -46,7 +46,7 @@ describe Stripe::CLI::Command do
 		it "calls super, passing in `Stripe::BalanceTransaction` and an `id`" do
 			Stripe::BalanceTransaction.should_receive(:retrieve).with( _id_, "stripe-key" )
 
-			Stripe::CLI::Runner.start ["balance_transactions", "find", _id_]
+			Stripe::CLI::Runner.start ["transactions", "find", _id_]
 		end
 
 	end
