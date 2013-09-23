@@ -3,7 +3,7 @@ module Stripe
     module Commands
       class Tokens < Command
 
-        desc "find ID", "Find a Token`"
+        desc "find ID", "Find a Token"
         def find event_id
           super Stripe::Event, event_id
         end

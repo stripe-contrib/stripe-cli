@@ -6,6 +6,8 @@ Uses [AwesomePrint](https://github.com/michaeldv/awesome_print) to provide very 
 
 ![example output](./output.png)
 
+Also, You might notice that those useless 'epoch-time' numbers that Stripe usually returns have been converted to DateTime stamps for you, your welcome!
+
 ## Installation
 
     $ gem install stripe-cli
@@ -32,16 +34,19 @@ You may also overide the default environment setting in your config file by pass
 
     $ stripe
 
-      Commands:
-        stripe balance_transaction  # /balance_transactions
-        stripe charges              # /charges
-        stripe tokens               # /tokens
-        stripe recipients           # /recipients
-        stripe customers            # /customers
-        stripe events               # /events
-        stripe plans                # /plans
-        stripe coupons              # /coupons
-        stripe invoices             # /invoices
+    Commands:
+      stripe balance         # show currently available and pending balance amounts
+      stripe charges         # find, list, create, capture, & refund charges
+      stripe coupons         # find, list, create, & delete coupons
+      stripe customers       # find, list, create, & delete customers
+      stripe events          # find & list events
+      stripe invoices        # find, list, pay, and close invoices
+      stripe plans           # find, list, create, & delete plans
+      stripe recipients      # find, list, create & delete recipients
+      stripe tokens          # find & create tokens for bank accounts & credit cards
+      stripe transactions    # find & list balance transactions
+      stripe transfers       # find, list, & create transfers
+
 
 Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands
 
@@ -128,8 +133,8 @@ or
 
 ### BalanceTransactions
 
-    $ stripe balance_transactions list [--type=TYPE][--source=SOURCE_ID]
-    $ stripe balance_transaction find trx_123
+    $ stripe transactions list [--type=TYPE][--source=SOURCE_ID]
+    $ stripe transaction find trx_123
 
 ### Recipients
 
@@ -138,10 +143,14 @@ or
     $ stripe recipient delete recip_123
     $ stripe recipient create
 
+### Transfers
+
+    $ stripe transfers list [--recipient=RECIPIENT_ID][--status=STATUS]
+    $ stripe transfer find trans_id
+    $ stripe transfer create
 
 ## Road Map
 
-1. support for transfers command suite
 1. test coverage, test coverage, test coverage!
 1. `--date` filters for all `list` operations
 1. `update` command operations

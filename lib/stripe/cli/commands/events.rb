@@ -10,7 +10,7 @@ module Stripe
           super Stripe::Event, options
         end
 
-        desc "find ID", "Find a event`"
+        desc "find ID", "Find a event"
         def find event_id
           super Stripe::Event, event_id
         end

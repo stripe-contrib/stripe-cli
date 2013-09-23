@@ -11,7 +11,7 @@ module Stripe
           super Stripe::Coupon, options
         end
 
-        desc "find ID", "Find a coupon`"
+        desc "find ID", "Find a coupon"
         def find coupon_id
           super Stripe::Coupon, coupon_id
         end

@@ -10,7 +10,8 @@ module Stripe
       register Commands::Invoices, 'invoices', 'invoices', 'find, list, pay, and close invoices'
       register Commands::Transactions, 'transactions', 'transactions', 'find & list balance transactions'
       register Commands::Balance, 'balance', 'balance', 'show currently available and pending balance amounts'
-      register Commands::Recipients, 'recipients', 'recipients', 'list, find, create & delete recipients'
+      register Commands::Recipients, 'recipients', 'recipients', 'find, list, create & delete recipients'
+      register Commands::Transfers, 'transfers', 'transfers', 'find, list, & create transfers'
     end
   end
 end
