@@ -6,11 +6,32 @@ Uses [AwesomePrint](https://github.com/michaeldv/awesome_print) to provide very 
 
 ![example output](./output.png)
 
-Also, You might notice that those useless 'epoch-time' numbers that Stripe usually returns have been converted to DateTime stamps for you, your welcome!
+Note that all JSON-style epoch timestamps have been converted to **real life** DateTime stamps, your welcome!
 
 ## Installation
 
     $ gem install stripe-cli
+
+Actually, the gem version is extreemly stale right now.  I hope to be able to update it soon.  Until then, there are a couple of <strike>hacks</strike> options available.
+
+1) clone the repo and build the gem locally yourself
+
+        $ git clone https://github.com/stripe-contrib/stripe-cli.git
+        $ cd ./stripe-cli
+        $ gem build stripe-cli.gemspec
+        $ gem install stripe-cli
+
+> because RubyGems looks **first** at the **current directory** before moving on to [rubygems.org](https://rubygems.org),  that last step will install the local gem you just built.
+
+
+or
+
+2) bundler can be used to automate this same procedure
+
+> in a Gemfile, write:
+
+        gem 'stripe-cli', :git => 'git@github.com:stripe-contrib/stripe-cli.git'
+
 
 ## Configuration
 
