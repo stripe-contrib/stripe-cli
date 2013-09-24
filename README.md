@@ -12,7 +12,7 @@ Note that all JSON-style epoch timestamps have been converted to **real life** D
 
     $ gem install stripe-cli
 
-Actually, the gem version is extreemly stale right now.  I hope to be able to update it soon.  Until then, there are a couple of <strike>hacks</strike> options available.
+Actually, the gem version is extremely stale right now.  I hope to be able to update it soon.  Until then, there are a couple of <strike>hacks</strike> options available.
 
 1) clone the repo and build the gem locally yourself
 
@@ -169,6 +169,16 @@ or
     $ stripe transfers list [--recipient=RECIPIENT_ID][--status=STATUS]
     $ stripe transfer find trans_id
     $ stripe transfer create
+
+#### Easter Egg Alert!
+
+You can pass the `--balance` flag into `transfer create` to automatically set transfer `amount` equal to your currently available balance.
+
+example:
+
+    $ stripe transfer create --balance --recipient=self
+
+> No, its not magic.  The `--balance` flag just triggers a 'preflight' api call to retrieve your current balance and assigns that to the `--amount` option
 
 ## Road Map
 
