@@ -39,7 +39,7 @@ module Stripe
           options[:email]  ||= ask('Recipient\'s Email:')
           options[:type]   ||= if options.delete(:individual) then 'individual'
           elsif options.delete(:corporation) then 'corporation'
-          else  ask('Corporation? (Yn)').downcase.start_with?("y") ? 'corporation' : 'individual'
+          else  ask('Corporation? (Y/n)').downcase.start_with?('y') ? 'corporation' : 'individual'
           end
           options[:tax_id] ||= case options[:type]
           when 'individual' then ask('Tax ID (SSN):')

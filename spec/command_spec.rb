@@ -1,18 +1,18 @@
 require 'rspec'
 require_relative '../lib/stripe/cli.rb'
 
+Stripe::CLI::Command.class_eval do
+	protected
+	def api_key
+		"stripe-key"
+	end
+end
+
+
 describe Stripe::CLI::Command do
 	let(:_id_) { "random-id-string" }
-	before :all do
-		Stripe::CLI::Command.class_eval do
-			protected
-			def api_key
-				"stripe-key"
-			end
-		end
-	end
-	describe "#find" do
 
+	describe "#find" do
 		it "calls super, passing in `Stripe::Charge` and an `id`" do
 			Stripe::Charge.should_receive(:retrieve).with( _id_, "stripe-key" )
 

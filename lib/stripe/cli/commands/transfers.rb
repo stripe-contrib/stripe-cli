@@ -23,7 +23,7 @@ module Stripe
         option :currency, :default => 'usd'
         option :description
         option :statement_descriptor
-				option :balance, :type => :boolean
+        option :balance, :type => :boolean
         def create
           if options.delete(:balance) == true
             options[:amount] = Stripe::Balance.retrieve(api_key).available.first.amount
@@ -32,11 +32,14 @@ module Stripe
             options[:amount] = (Float(options[:amount]) * 100).to_i
           end
           options[:recipient] ||= ask('Recipient ID or self:')
-          if options[:recipient] == ""
-            return system( "stripe recipients create" ) if ask("Transfers require a `recipient_id`\nCreate a Recipient? (Y/n)").downcase.start_with? "y"
-          else
-            super Stripe::Transfer, options
-          end
+          options[:recipient] = create_recipient[:id] if options[:recipient] == ""
+          super Stripe::Transfer, options
+        end
+
+        private
+
+        def create_recipient
+          Stripe::CLI::Runner.start [ "recipients", "create" ]
         end
       end
     end
