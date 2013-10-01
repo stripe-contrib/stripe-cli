@@ -12,9 +12,9 @@ Note that all JSON-style epoch timestamps have been converted to **real life** D
 
     $ gem install stripe-cli
 
-Actually, the gem version is extremely stale right now.  I hope to be able to update it soon.  Until then, there are a couple of <strike>hacks</strike> options available.
 
-1) clone the repo and build the gem locally yourself
+
+you may also clone the repo and build the gem locally yourself
 
         $ git clone https://github.com/stripe-contrib/stripe-cli.git
         $ cd ./stripe-cli
@@ -23,14 +23,6 @@ Actually, the gem version is extremely stale right now.  I hope to be able to up
 
 > because RubyGems looks **first** at the **current directory** before moving on to [rubygems.org](https://rubygems.org),  that last step will install the local gem you just built.
 
-
-or
-
-2) bundler can be used to automate this same procedure
-
-> in a Gemfile, write:
-
-        gem 'stripe-cli', :git => 'git@github.com:stripe-contrib/stripe-cli.git'
 
 
 ## Configuration
