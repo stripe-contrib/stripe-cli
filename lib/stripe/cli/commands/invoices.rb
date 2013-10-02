@@ -28,7 +28,7 @@ module Stripe
 
         desc "upcoming CUSTOMER", "find the upcoming invoice for CUSTOMER"
         def upcoming customer_id
-          special Stripe::Invoice, :upcoming, {:customer => customer_id}
+          output Stripe::Invoice.upcoming( {:customer => customer_id}, api_key )
         end
       end
     end
