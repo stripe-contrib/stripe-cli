@@ -18,17 +18,17 @@ module Stripe
 
         desc "close ID", "close an unpaid invoice"
         def close invoice_id
-          special Stripe::Invoice, :close, invoice_id
+          request Stripe::Invoice.new(invoice_id, api_key), :close
         end
 
         desc "pay ID", "trigger an open invoice to be paid immediately"
         def pay invoice_id
-          special Stripe::Invoice, :pay, invoice_id
+          request Stripe::Invoice.new(invoice_id, api_key), :pay
         end
 
         desc "upcoming CUSTOMER", "find the upcoming invoice for CUSTOMER"
         def upcoming customer_id
-          output Stripe::Invoice.upcoming( {:customer => customer_id}, api_key )
+          request Stripe::Invoice, :upcoming, {:customer => customer_id}, api_key
         end
       end
     end

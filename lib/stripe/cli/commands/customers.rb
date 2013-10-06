@@ -36,11 +36,14 @@ module Stripe
         option :card_name
 
         def create
-          say('All of the following are OPTIONAL parameters...')
-          options[:email]  ||= ask('Customer\'s Email:')
+          options[:email]       ||= ask('Customer\'s Email:')
           options[:description] ||= ask('Provide a description:')
-          options[:plan]   ||= ask('Assign a plan:')
-          options[:coupon] ||= ask('Apply a coupon:')
+          options[:plan]        ||= ask('Assign a plan:')
+          if options[:plan] == ""
+            options.delete :plan
+          else
+            options[:coupon]    ||= ask('Apply a coupon:')
+          end
 
           if options[:plan]
             options[:card_name]      ||= ask('Name on Card:')

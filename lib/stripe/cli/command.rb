@@ -39,28 +39,28 @@ module Stripe
       end
 
       def list klass, options
-        Stripe.api_version = api_version unless api_version.nil?
-        output klass.all( options, api_key )
+        request klass, :all, options, api_key
       end
 
       def find klass, id
-        Stripe.api_version = api_version unless api_version.nil?
-        output klass.retrieve( id, api_key )
+        request klass, :retrieve, id, api_key
       end
 
       def delete klass, id
-        Stripe.api_version = api_version unless api_version.nil?
-        output klass.new( id, api_key ).delete
+        request klass.new( id, api_key ), :delete
       end
 
       def create klass, options
-        Stripe.api_version = api_version unless api_version.nil?
-        output klass.create( options, api_key )
+        request klass, :create, options, api_key
       end
 
-      def special klass, method, options
+      def request object, method, *arguments
         Stripe.api_version = api_version unless api_version.nil?
-        output klass.new( options, api_key ).send( method )
+        begin
+          output object.send method, *arguments
+        rescue StripeError => e
+          output e.message
+        end
       end
 
     private
@@ -74,22 +74,22 @@ module Stripe
         when Array
           object.map {|o| inspect(o) }
         when Hash
-          object.inject({}) do |hash, (key, value)|
-            hash[key] = inspect( value )
-            hash
-          end
+          handle_hash object
         when Stripe::ListObject
           inspect object.data
         when Stripe::StripeObject
           inspect object.to_hash
         when Numeric
-          if object > 1000000000
-            Time.at object
-          else
-            object
-          end
+          object > 1000000000 ? Time.at( object ) : object
         else
           object
+        end
+      end
+
+      def handle_hash object
+        object.inject({}) do |hash, (key, value)|
+          hash[key] = inspect( value )
+          hash
         end
       end
     end

@@ -16,13 +16,15 @@ module Stripe
         end
 
         desc "refund ID", "Refund a charge"
+        option :amount, :type => :numeric
         def refund charge_id
-          special Stripe::Charge, :refund, charge_id
+          options[:amount] = (Float(options[:amount]) * 100).to_i
+          request Stripe::Charge.new(charge_id, api_key), :refund, options
         end
 
         desc "capture ID", "Capture a charge"
         def capture charge_id
-          special Stripe::Charge, :capture, charge_id
+          request Stripe::Charge.new(charge_id, api_key), :capture
         end
 
         desc "create", "Create a charge"

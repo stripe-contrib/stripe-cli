@@ -75,15 +75,15 @@ or
 
 ## uniform behavior
 
-The Stripe API is very consistant. Consistency makes using the api intuitive. This utility strives to maintain Stripe's consistency. Depending on which [C.R.U.D.](http://wikipedia.org/wiki/Create,_read,_update_and_delete) operation you are after, you can pretty much count on a few standard options to be available.
+The Stripe API is very consistant. Consistency makes using the api intuitive. What makes an api consistant? For one, uniform parameters across api resources. Here are a few examples of uniform behavior within this utility.
 
-### stripe (subcommand) list ...
+#### list operations
 
 specify how many results, between 1 and 100, should be returned (default is 10)
 
     ... list [--count=COUNT]
 
-specify the starting index for this result set, relative to the entire result set (usefull in combination with `--count` for paginating results)
+specify the starting index for this result set, relative to the entire result set (useful in combination with `--count` for paginating results)
 
     ... list [--offset=OFFSET]
 
@@ -96,6 +96,10 @@ or
 
     $ stripe charges create [--amount=AMOUNT]
     Name on Card: __
+
+Api errors are rescued and their messages displayed for you to read easily.  No more `barfing` to `stdout`  ...hopefully
+
+![error rescue example](./error_message_display.png)
 
 ### Charges
 
