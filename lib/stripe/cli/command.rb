@@ -3,9 +3,12 @@ require 'parseconfig'
 module Stripe
   module CLI
     class Command < Thor
+      @@config = File.expand_path('~/.stripecli')
+
       class_option :key, :aliases => :k
       class_option :env, :aliases => :e
       class_option :version, :aliases => :v
+
       protected
 
       def api_key
@@ -35,7 +38,7 @@ module Stripe
       end
 
       def config_file
-        File.expand_path('~/.stripecli')
+        @@config
       end
 
       def list klass, options

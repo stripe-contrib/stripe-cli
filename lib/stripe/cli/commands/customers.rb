@@ -2,6 +2,8 @@ module Stripe
   module CLI
     module Commands
       class Customers < Command
+        include Stripe::Utils
+
         desc "list", "List customers"
         option :count
         option :offset
@@ -44,22 +46,9 @@ module Stripe
           else
             options[:coupon]    ||= ask('Apply a coupon:')
           end
+          options.delete( :coupon ) if options[:coupon] == ""
 
-          if options[:plan]
-            options[:card_name]      ||= ask('Name on Card:')
-            options[:card_number]    ||= ask('Card number:')
-            options[:card_cvc]       ||= ask('CVC code:')
-            options[:card_exp_month] ||= ask('expiration month:')
-            options[:card_exp_year]  ||= ask('expiration year:')
-
-            options[:card] = {
-              :number    => options.delete(:card_number),
-              :exp_month => options.delete(:card_exp_month),
-              :exp_year  => options.delete(:card_exp_year),
-              :cvc       => options.delete(:card_cvc),
-              :name      => options.delete(:card_name)
-            }
-          end unless options[:card]
+          options[:card] ||= credit_card( options ) if options[:plan]
 
           super Stripe::Customer, options
         end

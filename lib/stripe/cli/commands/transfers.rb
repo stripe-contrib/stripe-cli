@@ -24,6 +24,7 @@ module Stripe
         option :description
         option :statement_descriptor
         option :balance, :type => :boolean
+        option :self, :type => :boolean
         def create
           if options.delete(:balance) == true
             options[:amount] = Stripe::Balance.retrieve(api_key).available.first.amount
@@ -31,8 +32,14 @@ module Stripe
             options[:amount] ||= ask('Amount in Dollars:')
             options[:amount] = (Float(options[:amount]) * 100).to_i
           end
-          options[:recipient] ||= ask('Recipient ID or self:')
-          options[:recipient] = create_recipient[:id] if options[:recipient] == ""
+
+          if options.delete(:self) == true
+            options[:recipient] = 'self'
+          else
+            options[:recipient] ||= ask('Recipient ID or self:')
+            options[:recipient] = create_recipient[:id] if options[:recipient] == ""
+          end
+
           super Stripe::Transfer, options
         end
 

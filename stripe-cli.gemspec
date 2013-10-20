@@ -8,14 +8,16 @@ Gem::Specification.new do |spec|
   spec.version       = Stripe::CLI::VERSION
   spec.authors       = ["Alex MacCaw", "Andy Cohen"]
   spec.email         = ["alex@stripe.com", "outlawandy@gmail.com"]
-  spec.description   = %q{Command line access to all of the Stripe API}
+  spec.description   = <<-DESC.gsub("\t","")
+  a git-style cli, offering instant access to all of the Stripe API right from the console.
+  With an emphasis on convenience and productivity and a commitment to pretty, colorful, but most of all READABLE output.
+  DESC
   spec.summary       = %q{Command line interface to Stripe}
   spec.homepage      = "https://stripe.com"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
   spec.bindir        = 'bin'
-  spec.executables  << 'stripe'
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]
   spec.executables   = ["stripe"]

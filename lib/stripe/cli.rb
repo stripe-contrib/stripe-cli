@@ -2,6 +2,7 @@ require "thor"
 require "stripe"
 require "stripe/cli/version"
 require "awesome_print"
+require "stripe/utils"
 
 module Stripe
   module CLI
