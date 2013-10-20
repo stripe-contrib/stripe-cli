@@ -33,7 +33,7 @@ module Stripe
         option :country
         option :account_number
         option :routing_number
-
+        option :metadata, :type => :hash
         def create
           options[:name]   ||= ask('Recipient\'s Name:')
           options[:email]  ||= ask('Recipient\'s Email:')

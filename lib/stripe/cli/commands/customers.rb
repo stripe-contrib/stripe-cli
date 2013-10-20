@@ -36,7 +36,7 @@ module Stripe
         option :card_exp_year
         option :card_cvc
         option :card_name
-
+        option :metadata, :type => :hash
         def create
           options[:email]       ||= ask('Customer\'s Email:')
           options[:description] ||= ask('Provide a description:')

@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://stripe.com"
   spec.license       = "MIT"
 
-  spec.files         = `git ls-files`.split($/)
+  spec.files         = `git ls-files`.split($/).delete_if{ |f| "png" == f[/\.(.*)$/,1] }# don't include example images
   spec.bindir        = 'bin'
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ["lib"]

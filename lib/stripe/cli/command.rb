@@ -26,7 +26,7 @@ module Stripe
       def stored_api_option option
         if File.exists?(config_file)
           if environment
-            config[environment][option.to_s]
+            config[environment][option.to_s] || config[option.to_s]
           else
             config[option.to_s]
           end

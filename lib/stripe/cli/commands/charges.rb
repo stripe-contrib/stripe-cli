@@ -41,7 +41,7 @@ module Stripe
         option :currency, :default => 'usd'
         option :description
         option :capture, :type => :boolean, :default => true
-
+        option :metadata, :type => :hash
         def create
           options[:amount] ||= ask('Amount in dollars:')
           options[:amount] = (Float(options[:amount]) * 100).to_i
