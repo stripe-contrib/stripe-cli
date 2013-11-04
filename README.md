@@ -1,5 +1,6 @@
+<a href="http://badge.fury.io/rb/stripe-cli"><img style="float:right;" src="https://badge.fury.io/rb/stripe-cli.png" alt="Gem Version" height="18"></a>
+<a href="https://codeclimate.com/repos/52773e8fc7f3a3121a004455/feed"><img style="float:right;margin-right:10px;" src="https://codeclimate.com/repos/52773e8fc7f3a3121a004455/badges/67e5d04281479d6f8cb3/gpa.png"></a>
 # Stripe::CLI
-
 stripe-cli is a command line interface to [Stripe](https://stripe.com).
 
 Uses [AwesomePrint](https://github.com/michaeldv/awesome_print) to provide very readable output on your command line.
@@ -33,7 +34,7 @@ For authentication, pass your secret key using the `-k` or `--key` option
 
 To use a specific api version, pass in the `-v` or `--version` option
 
-    $ stripe balance_transactions list -v "2013-08-13"
+    $ stripe balance_transactions list -v "2013-10-29"
 
 You may also store default configurations in a `~/.stripecli` file that conforms to the following example
 
@@ -61,13 +62,13 @@ You may also overide the default environment setting in your config file by pass
       stripe transfers       # find, list, & create transfers
 
 
-Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands
+Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands, including metadata.
 
     $ stripe charges create [--amount=AMOUNT][--description=DESC][--card_number=NUM][--card_cvc=CVC][--card_exp_month=MM][--card_exp_year=YYYY]
 
 or
 
-    $ stripe charges create [--amount=AMOUNT][--card=TOKEN_ID]
+    $ stripe charges create [--amount=AMOUNT][--card=TOKEN_ID][--metadata=foo:bar details:"product# 4369"]
 
 or
 
