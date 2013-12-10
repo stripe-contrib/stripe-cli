@@ -7,7 +7,7 @@ Uses [AwesomePrint](https://github.com/michaeldv/awesome_print) to provide very 
 
 ![example output](./output.png)
 
-Note that all JSON-style epoch timestamps have been converted to **real life** DateTime stamps, your welcome!
+Note that all JSON-style epoch timestamps have been converted to **real life** DateTime stamps, you're welcome!
 
 ## Installation
 
