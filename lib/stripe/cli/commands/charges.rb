@@ -20,7 +20,7 @@ module Stripe
         desc "refund ID", "Refund a charge"
         option :amount, :type => :numeric
         def refund charge_id
-          options[:amount] = (Float(options[:amount]) * 100).to_i
+          options[:amount] = (Float(options[:amount]) * 100).to_i if options[:amount]
           request Stripe::Charge.new(charge_id, api_key), :refund, options
         end
 

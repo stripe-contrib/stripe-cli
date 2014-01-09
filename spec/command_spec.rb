@@ -1,9 +1,4 @@
-require 'rspec'
-require_relative '../lib/stripe/cli.rb'
-
-f = Tempfile.new('config')
-f.write "key = stripe-key" and f.rewind
-Stripe::CLI::Command.class_variable_set :@@config, f
+require 'spec_helper'
 
 describe Stripe::CLI::Command do
 	let(:_id_) { "random-id-string" }
