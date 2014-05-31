@@ -1,13 +1,18 @@
 <a href="http://badge.fury.io/rb/stripe-cli"><img style="float:right;" src="https://badge.fury.io/rb/stripe-cli.png" alt="Gem Version" height="18"></a>
 <a href="https://codeclimate.com/repos/52773e8fc7f3a3121a004455/feed"><img style="float:right;margin-right:10px;" src="https://codeclimate.com/repos/52773e8fc7f3a3121a004455/badges/67e5d04281479d6f8cb3/gpa.png"></a>
 # Stripe::CLI
-stripe-cli is a command line interface to [Stripe](https://stripe.com).
+stripe-cli is the command line interface to [Stripe](https://stripe.com).
+
+Offering a friendly, intuitive interface to the entire API via a git-style command suite.
+
+With an emphasis on convenience and productivity and a commitment to pretty, colorful, but most of all READABLE output.
+
 
 Uses [AwesomePrint](https://github.com/michaeldv/awesome_print) to provide very readable output on your command line.
 
 ![example output](./output.png)
 
-Note that all JSON-style epoch timestamps have been converted to **real life** DateTime stamps, you're welcome!
+Note that Date/Time stamps are converted automatically.  No more Epoch/Unix timestamp garbage!
 
 ## Installation
 
@@ -46,8 +51,6 @@ You may also overide the default environment setting in your config file by pass
 
 ## Usage
 
-    $ stripe
-
     Commands:
       stripe balance         # show currently available and pending balance amounts
       stripe charges         # find, list, create, capture, & refund charges
@@ -64,7 +67,7 @@ You may also overide the default environment setting in your config file by pass
 
 Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands, including metadata.
 
-    $ stripe charges create [--amount=AMOUNT][--description=DESC][--card_number=NUM][--card_cvc=CVC][--card_exp_month=MM][--card_exp_year=YYYY]
+    $ stripe charges create [--amount=AMOUNT][--description=DESC][--card-number=NUM][--card-cvc=CVC][--card-exp-month=MM][--card-exp-year=YYYY]
 
 or
 
@@ -74,21 +77,26 @@ or
 
     $ stripe charges create [--amount=AMOUNT][--customer=CUST_ID]
 
-## uniform behavior
+### cursor-based pagination
 
-The Stripe API is very consistant. Consistency makes using the api intuitive. What makes an api consistant? For one, uniform parameters across api resources. Here are a few examples of uniform behavior within this utility.
+for all ```list``` operations
 
-#### list operations
+    Options:
+      [--starting-after=OBJECT_ID]  # The ID of the last object in the previous paged result set.
+      [--ending-before=OBJECT_ID]   # The ID of the first object in the previous paged result set, when paging backwards through the list.
+      [--limit=LIMIT]               # a limit on the number of resources returned, between 1 and 100
 
-specify how many results, between 1 and 100, should be returned (default is 10)
 
-    ... list [--count=COUNT]
+Though Stripe advocates using cursor-based pagination, offset-based pagination is still supported.
 
-specify the starting index for this result set, relative to the entire result set (useful in combination with `--count` for paginating results)
+e.g. fetching a second page
 
-    ... list [--offset=OFFSET]
+    stripe events list --count=10 --offset=10
 
-Passing NO (or partial) arguments, will trigger an interactive menu
+
+### Interactive Menus
+
+Passing NO (or partial) arguments to any operation, will trigger an interactive menu
 
     $ stripe charges create
     Amount in dollars: __
@@ -98,74 +106,96 @@ or
     $ stripe charges create [--amount=AMOUNT]
     Name on Card: __
 
-Api errors are rescued and their messages displayed for you to read easily.  No more `barfing` to `stdout`  ...hopefully
+### Exception Recovery
+
+Api errors are rescued and their messages displayed for you to read.  No more ```barfing``` to ```stdout```
 
 ![error rescue example](./error_message_display.png)
 
 ### Charges
 
-    $ stripe charges list
-    $ stripe charge find ch_123
-    $ stripe charge refund ch_123
-    $ stripe charge capture ch_123
-    $ stripe charge create
+    Commands:
+      stripe charges capture ID      # Capture a charge
+      stripe charges create          # Create a charge
+      stripe charges find ID         # Find a charge
+      stripe charges help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe charges list            # List charges
+      stripe charges refund ID       # Refund a charge
 
 ### Tokens
 
-    $ stripe token find tok_123
-    $ stripe token create TYPE (bank_account or credit_card)
+    Commands:
+      stripe tokens create TYPE     # create a new token of type TYPE(card or account)
+      stripe tokens find ID         # Find a Token
+      stripe tokens help [COMMAND]  # Describe subcommands or one specific subcommand
 
 ### Customers
 
-    $ stripe customers list
-    $ stripe customer find cust_123
-    $ stripe customer delete cust_123
-    $ stripe customer create
+    Commands:
+      stripe customers create          # Create a new customer
+      stripe customers delete ID       # Delete a customer
+      stripe customers find ID         # Find a customer
+      stripe customers help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe customers list            # List customers
 
 ### Invoices
 
-    $ stripe invoices list [--customer=CUST_ID]
-    $ stripe invoice find inv_123
-    $ stripe invoice close inv_123
-    $ stripe invoice pay inv_123
-    $ stripe invoice upcoming cust_123
+    Commands:
+      stripe invoices close ID           # close an unpaid invoice
+      stripe invoices find ID            # Find an invoice
+      stripe invoices help [COMMAND]     # Describe subcommands or one specific subcommand
+      stripe invoices list               # List invoices (optionally by customer_id)
+      stripe invoices pay ID             # trigger an open invoice to be paid immediately
+      stripe invoices upcoming CUSTOMER  # find the upcoming invoice for CUSTOMER
 
 ### Plans
 
-    $ stripe plans list
-    $ stripe plan find custom_plan_id
-    $ stripe plan delete custom_plan_id
-    $ stripe plan create
+    Commands:
+      stripe plans create          # Create a new plan
+      stripe plans delete ID       # Delete a plan
+      stripe plans find ID         # Find a plan
+      stripe plans help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe plans list            # List plans
 
 ### Coupons
 
-    $ stripe coupons list
-    $ stripe coupon find 25_off
-    $ stripe coupon delete 25_off
-    $ stripe coupon create
+    Commands:
+      stripe coupons create          # Create a new Coupon
+      stripe coupons delete ID       # Delete a coupon
+      stripe coupons find ID         # Find a coupon
+      stripe coupons help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe coupons list            # List coupons
 
 ### Events
 
-    $ stripe events list
-    $ stripe event find ev_123
+    Commands:
+      stripe events find ID         # Find a event
+      stripe events help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe events list            # List events
 
 ### BalanceTransactions
 
-    $ stripe transactions list [--type=TYPE][--source=SOURCE_ID]
-    $ stripe transaction find trx_123
+    Commands:
+      stripe transactions find ID         # Find a transaction
+      stripe transactions help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe transactions list [TYPE]     # List transactions, optionaly filter by type: ( charge refund adjustment application_fee application_fee_refund transfer transfer_failure )
 
 ### Recipients
 
-    $ stripe recipients list [--verified]
-    $ stripe recipient find recip_123
-    $ stripe recipient delete recip_123
-    $ stripe recipient create
+    Commands:
+      stripe recipients create          # create a new recipient
+      stripe recipients delete ID       # delete a recipient
+      stripe recipients find ID         # Find a recipient
+      stripe recipients help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe recipients list            # List recipients
 
 ### Transfers
 
-    $ stripe transfers list [--recipient=RECIPIENT_ID][--status=STATUS]
-    $ stripe transfer find trans_id
-    $ stripe transfer create
+    Commands:
+      stripe transfers create          # create a new outgoing money transfer
+      stripe transfers find ID         # Find a transfer
+      stripe transfers help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe transfers list            # List transfers, optionaly filter by recipient or transfer status: ( pending paid failed )
 
 #### Easter Egg Alert!
 
@@ -179,8 +209,6 @@ example:
 
 ## Road Map
 
-1. test coverage, test coverage, test coverage!
-1. `--date` filters for all `list` operations
 1. `update` command operations
 1. support for `disputes` & dispute handling
 1. support creating/updating config file through cli
@@ -188,6 +216,6 @@ example:
 1. request a feature you would like via the issue tracker
 
 
-pull requests welcome
+Pull requests are always welcome and appriciated.
 
-report issues in the issues tracker
+Please report issues, offer suggestions, and voice concerns in the issues tracker.

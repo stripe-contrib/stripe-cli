@@ -5,9 +5,12 @@ module Stripe
         include Stripe::Utils
 
         desc "list", "List charges"
-        option :count
+        option :starting_after, :desc => "The ID of the last object in the previous paged result set. For cursor-based pagination."
+        option :ending_before, :desc => "The ID of the first object in the previous paged result set, when paging backwards through the list."
+        option :limit, :desc => "a limit on the number of resources returned, between 1 and 100"
+        option :offset, :desc => "the starting index to be used, relative to the entire list"
+        option :count, :desc => "depricated: use limit"
         option :customer
-        option :offset
         def list
           super Stripe::Charge, options
         end

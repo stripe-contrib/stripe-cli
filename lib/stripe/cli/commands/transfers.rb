@@ -2,12 +2,15 @@ module Stripe
   module CLI
     module Commands
       class Transfers < Command
-        desc "list", "List transfers"
-        option :count
-        option :offset
-        option :recipient
-        option :status, :enum => %w( pending paid failed )
 
+        desc "list", "List transfers, optionaly filter by recipient or transfer status: ( pending paid failed )"
+        option :starting_after, :desc => "The ID of the last object in the previous paged result set. For cursor-based pagination."
+        option :ending_before, :desc => "The ID of the first object in the previous paged result set, when paging backwards through the list."
+        option :limit, :desc => "a limit on the number of resources returned, between 1 and 100"
+        option :offset, :desc => "the starting index to be used, relative to the entire list"
+        option :count, :desc => "depricated: use limit"
+        option :recipient, :desc => "limit result set to RECIPIENT's transfers"
+        option :status, :desc => "filter by transfer status: ( pending paid failed )", :enum => %w( pending paid failed )
         def list
           super Stripe::Transfer, options
         end
