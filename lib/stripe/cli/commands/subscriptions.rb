@@ -36,7 +36,7 @@ module Stripe
         option :card_cvc
         option :card_name
         option :metadata, :type => :hash
-        option :customer, :required => true, :desc => "id of customer reciving the new subscription"
+        option :customer, :required => true, :desc => "id of customer receiving the new subscription"
         def create
           options[:plan]      ||= ask('Assign a plan:')
           options[:coupon]    ||= ask('Apply a coupon:')

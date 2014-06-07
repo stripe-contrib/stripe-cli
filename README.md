@@ -53,10 +53,12 @@ You may also overide the default environment setting in your config file by pass
 
     Commands:
       stripe balance         # show currently available and pending balance amounts
+      stripe cards           # find, list, create, & delete cards for both customers & recipients
       stripe charges         # find, list, create, capture, & refund charges
       stripe coupons         # find, list, create, & delete coupons
       stripe customers       # find, list, create, & delete customers
       stripe events          # find & list events
+      stripe help [COMMAND]  # Describe available commands or one specific command
       stripe invoices        # find, list, pay, and close invoices
       stripe plans           # find, list, create, & delete plans
       stripe recipients      # find, list, create & delete recipients
@@ -126,9 +128,18 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
 ### Tokens
 
     Commands:
-      stripe tokens create TYPE     # create a new token of type TYPE(card or account)
+      stripe tokens create TYPE     # Create a new token of type TYPE(card or account)
       stripe tokens find ID         # Find a Token
       stripe tokens help [COMMAND]  # Describe subcommands or one specific subcommand
+
+### Cards
+
+    Commands:
+      stripe cards create --owner=OWNER     # Create a new card for OWNER (customer or recipient)
+      stripe cards delete ID --owner=OWNER  # Delete ID card for OWNER (customer or recipient)
+      stripe cards find ID --owner=OWNER    # Find ID card for OWNER (customer or recipient)
+      stripe cards help [COMMAND]           # Describe subcommands or one specific subcommand
+      stripe cards list --owner=OWNER       # List cards for OWNER (customer or recipient)
 
 ### Customers
 
@@ -142,16 +153,16 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
 ### Subscriptions
 
     Commands:
-      stripe subscriptions cancel ID --customer=CUSTOMER  # cancel ID subscription for CUSTOMER customer
-      stripe subscriptions create --customer=CUSTOMER     # create a subscription for CUSTOMER customer
-      stripe subscriptions find ID --customer=CUSTOMER    # find ID subscription for CUSTOMER customer
+      stripe subscriptions cancel ID --customer=CUSTOMER  # Cancel ID subscription for CUSTOMER customer
+      stripe subscriptions create --customer=CUSTOMER     # Create a subscription for CUSTOMER customer
+      stripe subscriptions find ID --customer=CUSTOMER    # Find ID subscription for CUSTOMER customer
       stripe subscriptions help [COMMAND]                 # Describe subcommands or one specific subcommand
       stripe subscriptions list --customer=CUSTOMER       # List subscriptions for CUSTOMER customer
 
 ### Invoices
 
     Commands:
-      stripe invoices close ID           # close an unpaid invoice
+      stripe invoices close ID           # Close an unpaid invoice
       stripe invoices find ID            # Find an invoice
       stripe invoices help [COMMAND]     # Describe subcommands or one specific subcommand
       stripe invoices list               # List invoices (optionally by customer_id)
@@ -193,8 +204,8 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
 ### Recipients
 
     Commands:
-      stripe recipients create          # create a new recipient
-      stripe recipients delete ID       # delete a recipient
+      stripe recipients create          # Create a new recipient
+      stripe recipients delete ID       # Delete a recipient
       stripe recipients find ID         # Find a recipient
       stripe recipients help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe recipients list            # List recipients
@@ -202,7 +213,7 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
 ### Transfers
 
     Commands:
-      stripe transfers create          # create a new outgoing money transfer
+      stripe transfers create          # Create a new outgoing money transfer
       stripe transfers find ID         # Find a transfer
       stripe transfers help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe transfers list            # List transfers, optionaly filter by recipient or transfer status: ( pending paid failed )

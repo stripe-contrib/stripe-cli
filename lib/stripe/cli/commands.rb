@@ -1,6 +1,7 @@
 module Stripe
   module CLI
     module Commands
+      autoload :Cards, 'stripe/cli/commands/cards'
       autoload :Charges, 'stripe/cli/commands/charges'
       autoload :Customers, 'stripe/cli/commands/customers'
       autoload :Tokens, 'stripe/cli/commands/tokens'

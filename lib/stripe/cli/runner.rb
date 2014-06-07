@@ -1,6 +1,7 @@
 module Stripe
   module CLI
     class Runner < Thor
+      register Commands::Cards, 'cards', 'cards', 'find, list, create, & delete cards for both customers & recipients'
       register Commands::Charges, 'charges', 'charges', 'find, list, create, capture, & refund charges'
       register Commands::Customers, 'customers', 'customers', 'find, list, create, & delete customers'
       register Commands::Tokens, 'tokens', 'tokens', 'find & create tokens for bank accounts & credit cards'
