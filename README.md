@@ -138,6 +138,15 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe customers help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe customers list            # List customers
 
+### Subscriptions
+
+    Commands:
+      stripe subscriptions cancel ID --customer=CUSTOMER  # cancel ID subscription for CUSTOMER customer
+      stripe subscriptions create --customer=CUSTOMER     # create a subscription for CUSTOMER customer
+      stripe subscriptions find ID --customer=CUSTOMER    # find ID subscription for CUSTOMER customer
+      stripe subscriptions help [COMMAND]                 # Describe subcommands or one specific subcommand
+      stripe subscriptions list --customer=CUSTOMER       # List subscriptions for CUSTOMER customer
+
 ### Invoices
 
     Commands:

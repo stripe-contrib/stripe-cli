@@ -11,6 +11,7 @@ module Stripe
       register Commands::Transactions, 'transactions', 'transactions', 'find & list balance transactions'
       register Commands::Balance, 'balance', 'balance', 'show currently available and pending balance amounts'
       register Commands::Recipients, 'recipients', 'recipients', 'find, list, create & delete recipients'
+      register Commands::Subscriptions, 'subscriptions', 'subscriptions', 'find, list, create & cancel subscriptions for a customer'
       register Commands::Transfers, 'transfers', 'transfers', 'find, list, & create transfers'
     end
   end
