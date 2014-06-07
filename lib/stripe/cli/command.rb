@@ -41,11 +41,6 @@ module Stripe
         @@config
       end
 
-      method_option :starting_after, :desc => "The ID of the last object in the previous paged result set. For cursor-based pagination."
-      method_option :ending_before, :desc => "The ID of the first object in the previous paged result set, when paging backwards through the list."
-      method_option :limit, :desc => "a limit on the number of resources returned, between 1 and 100"
-      method_option :offset, :desc => "the starting index to be used, relative to the entire list"
-      method_option :count, :desc => "depricated: use limit"
       def list klass, options
         request klass, :all, options, api_key
       end
