@@ -60,6 +60,7 @@ You may also overide the default environment setting in your config file by pass
       stripe invoices        # find, list, pay, and close invoices
       stripe plans           # find, list, create, & delete plans
       stripe recipients      # find, list, create & delete recipients
+      stripe subscriptions   # find, list, create & cancel multiple subscriptions per customer
       stripe tokens          # find & create tokens for bank accounts & credit cards
       stripe transactions    # find & list balance transactions
       stripe transfers       # find, list, & create transfers
