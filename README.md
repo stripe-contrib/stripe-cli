@@ -45,9 +45,30 @@ You may also store default configurations in a `~/.stripecli` file that conforms
 
 ![example config file](./example.png)
 
+If this file exists, the specified default key is picked up and used automatically.
+
+The current directory is now also checked for the existance of a `.stripecli` file. In which case, that file is used instead.
+
 You may also overide the default environment setting in your config file by passing in the `-e` or `--env` option
 
     $ stripe customers find cust_123 --env=live
+
+If you manage separate Stripe accounts for several projects, I suggest creating a simple `.stripecli` file
+at the root of each project declaring the test api key for the appropriate Stripe account.
+
+For example `./.stripecli`:
+
+    key = sk_test_abcdef123456
+
+or, if you'd rather:
+
+    default = test
+    [test]
+      key = sk_test_abcdef123456
+    [live]
+      key = sk_live_ghijkl789101
+
+If you choose to go this route, make sure to add `.stripecli` to your `.gitignore` files.
 
 ## Usage
 

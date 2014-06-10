@@ -3,7 +3,8 @@ require 'parseconfig'
 module Stripe
   module CLI
     class Command < Thor
-      @@config = File.expand_path('~/.stripecli')
+      @@root_config = ::File.expand_path('~/.stripecli')
+      @@local_config = ::File.expand_path('./.stripecli')
 
       class_option :key, :aliases => :k
       class_option :env, :aliases => :e
@@ -34,11 +35,11 @@ module Stripe
       end
 
       def config
-        ParseConfig.new(config_file) if File.exists?(config_file)
+        ParseConfig.new(config_file) if File.exist?(config_file)
       end
 
       def config_file
-        @@config
+        File.exist?(@@local_config) ? @@local_config : @@root_config
       end
 
       def list klass, options
