@@ -14,6 +14,7 @@ module Stripe
       register Commands::Recipients, 'recipients', 'recipients', 'find, list, create & delete recipients'
       register Commands::Subscriptions, 'subscriptions', 'subscriptions', 'find, list, create & cancel multiple subscriptions per customer'
       register Commands::Transfers, 'transfers', 'transfers', 'find, list, & create transfers'
+      register Commands::Version, 'version', 'version', 'display current gem version'
     end
   end
 end
