@@ -33,7 +33,7 @@ module Stripe
         end
 
         desc "create", "Create a charge"
-        option :customer
+        option :customer, :desc => "The ID of an existing customer"
         option :card
         option :card_number
         option :card_exp_month
@@ -45,6 +45,8 @@ module Stripe
         option :description
         option :capture, :type => :boolean, :default => true
         option :metadata, :type => :hash
+        option :statement_description, :desc => "a string to be displayed alongside your company name on your customer's credit card statementup. Maybe up to 15 characters in length."
+        option :receipt_email, :desc => "The email address to send this charge's receipt to. Overrides all default email settings."
         def create
           options[:amount] ||= ask('Amount in dollars:')
           options[:amount] = (Float(options[:amount]) * 100).to_i
