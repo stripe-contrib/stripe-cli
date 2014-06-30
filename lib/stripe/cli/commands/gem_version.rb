@@ -3,6 +3,7 @@ module Stripe
     module Commands
       class Version < Command
         desc "version", "display the current gem version number"
+        option :hide
         def version
           puts "stripe-cli v#{Stripe::CLI::VERSION}"
         end
