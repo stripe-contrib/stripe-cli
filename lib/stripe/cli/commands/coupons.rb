@@ -33,7 +33,7 @@ module Stripe
         option :max_redemptions, :type => :numeric
         option :duration_in_months
         option :currency, :default => 'usd'
-
+        option :metadata, :type => :hash
         def create
           unless options[:percent_off] || options[:amount_off]
             discount = ask('(e.g. 25% or $10) specify discount:')

@@ -31,7 +31,7 @@ module Stripe
         option :interval_count, :type => :numeric, :default => 1
         option :currency, :default => 'usd'
         option :trial_period_days, :type => :numeric, :default => 0
-
+        option :metadata, :type => :hash
         def create
           options[:amount] ||= ask('Amount in dollars:')
           options[:amount]   = (Float(options[:amount]) * 100).to_i

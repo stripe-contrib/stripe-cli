@@ -14,7 +14,7 @@ module Stripe
       register Commands::Transactions, 'transactions', 'transactions', 'find & list balance transactions'
       register Commands::Balance, 'balance', 'balance', 'show currently available and pending balance amounts'
       register Commands::Recipients, 'recipients', 'recipients', 'find, list, create & delete recipients'
-      register Commands::Subscriptions, 'subscriptions', 'subscriptions', 'find, list, create & cancel multiple subscriptions per customer'
+      register Commands::Subscriptions, 'subscriptions', 'subscriptions', 'find, list, create, cancel & reactivate multiple subscriptions per customer'
       register Commands::Transfers, 'transfers', 'transfers', 'find, list, & create transfers'
       register Commands::Version, 'version', 'version', 'display current gem version', hide: true
     end

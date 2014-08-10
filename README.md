@@ -83,7 +83,7 @@ If you choose to go this route, make sure to add `.stripecli` to your `.gitignor
       stripe invoices        # find, list, pay, and close invoices
       stripe plans           # find, list, create, & delete plans
       stripe recipients      # find, list, create & delete recipients
-      stripe subscriptions   # find, list, create & cancel multiple subscriptions per customer
+      stripe subscriptions   # find, list, create, cancel & reactivate multiple subscriptions per customer
       stripe tokens          # find & create tokens for bank accounts & credit cards
       stripe transactions    # find & list balance transactions
       stripe transfers       # find, list, & create transfers
@@ -174,11 +174,12 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
 ### Subscriptions
 
     Commands:
-      stripe subscriptions cancel ID --customer=CUSTOMER  # Cancel ID subscription for CUSTOMER customer
-      stripe subscriptions create --customer=CUSTOMER     # Create a subscription for CUSTOMER customer
-      stripe subscriptions find ID --customer=CUSTOMER    # Find ID subscription for CUSTOMER customer
-      stripe subscriptions help [COMMAND]                 # Describe subcommands or one specific subcommand
-      stripe subscriptions list --customer=CUSTOMER       # List subscriptions for CUSTOMER customer
+      stripe subscriptions cancel ID --customer=CUSTOMER      # cancel ID subscription for CUSTOMER customer
+      stripe subscriptions create --customer=CUSTOMER         # create a subscription for CUSTOMER customer
+      stripe subscriptions find ID --customer=CUSTOMER        # find ID subscription for CUSTOMER customer
+      stripe subscriptions help [COMMAND]                     # Describe subcommands or one specific subcommand
+      stripe subscriptions list --customer=CUSTOMER           # List subscriptions for CUSTOMER customer
+      stripe subscriptions reactivate ID --customer=CUSTOMER  # reactivate auto-renewal if `cancel-at-period-end` was set to true
 
 ### Invoices
 
