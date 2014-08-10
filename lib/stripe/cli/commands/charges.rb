@@ -17,11 +17,11 @@ module Stripe
 
         desc "find ID", "Find a charge"
         def find charge_id
-        	super Stripe::Charge, charge_id
+          super Stripe::Charge, charge_id
         end
 
         desc "refund ID", "Refund a charge"
-        option :amount, :type => :numeric, :desc => "Refund amount in dollars"
+        option :amount, :type => :numeric, :desc => "Refund amount in dollars. (Entire charge by default)"
         option :metadata, :type => :hash
         option :refund_application_fee, :type => :boolean, :default => false, :desc => "Whether or not to refund the application fee"
         def refund charge_id

@@ -12,6 +12,7 @@ module Stripe
       autoload :Transactions, 'stripe/cli/commands/transactions'
       autoload :Balance, 'stripe/cli/commands/balance'
       autoload :Recipients, 'stripe/cli/commands/recipients'
+      autoload :Refunds, 'stripe/cli/commands/refunds'
       autoload :Subscriptions, 'stripe/cli/commands/subscriptions'
       autoload :Transfers, 'stripe/cli/commands/transfers'
       autoload :Version, 'stripe/cli/commands/gem_version'

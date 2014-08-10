@@ -18,19 +18,6 @@ Note that Date/Time stamps are converted automatically.  No more Epoch/Unix time
 
     $ gem install stripe-cli
 
-
-
-you may also clone the repo and build the gem locally yourself
-
-        $ git clone https://github.com/stripe-contrib/stripe-cli.git
-        $ cd ./stripe-cli
-        $ gem build stripe-cli.gemspec
-        $ gem install stripe-cli
-
-> because RubyGems looks **first** at the **current directory** before moving on to [rubygems.org](https://rubygems.org),  that last step will install the local gem you just built.
-
-
-
 ## Configuration
 
 For authentication, pass your secret key using the `-k` or `--key` option
@@ -39,7 +26,7 @@ For authentication, pass your secret key using the `-k` or `--key` option
 
 To use a specific api version, pass in the `-v` or `--version` option
 
-    $ stripe balance_transactions list -v "2013-10-29"
+    $ stripe balance_transactions list -v "2014-08-04"
 
 You may also store default configurations in a `~/.stripecli` file that conforms to the following example
 
@@ -73,17 +60,18 @@ If you choose to go this route, make sure to add `.stripecli` to your `.gitignor
 ## Usage
 
     Commands:
-      stripe balance         # show currently available and pending balance amounts
+      stripe balance         # show currently available & pending balance amounts
       stripe cards           # find, list, create, & delete cards for both customers & recipients
       stripe charges         # find, list, create, capture, & refund charges
       stripe coupons         # find, list, create, & delete coupons
       stripe customers       # find, list, create, & delete customers
       stripe events          # find & list events
       stripe help [COMMAND]  # Describe available commands or one specific command
-      stripe invoices        # find, list, pay, and close invoices
+      stripe invoices        # find, list, pay, & close invoices
       stripe plans           # find, list, create, & delete plans
-      stripe recipients      # find, list, create & delete recipients
-      stripe subscriptions   # find, list, create, cancel & reactivate multiple subscriptions per customer
+      stripe recipients      # find, list, create, & delete recipients
+      stripe refunds         # find, list, & create refunds
+      stripe subscriptions   # find, list, create, cancel, & reactivate multiple subscriptions per customer
       stripe tokens          # find & create tokens for bank accounts & credit cards
       stripe transactions    # find & list balance transactions
       stripe transfers       # find, list, & create transfers
@@ -101,6 +89,18 @@ or
 
     $ stripe charges create [--amount=AMOUNT][--customer=CUST_ID]
 
+### Interactive Menus
+
+Passing NO (or partial) arguments to any operation, will trigger an interactive menu
+
+    $ stripe charges create
+    Amount in dollars: __
+
+or
+
+    $ stripe charges create [--amount=AMOUNT]
+    Name on Card: __
+
 ### cursor-based pagination
 
 for all ```list``` operations
@@ -117,19 +117,6 @@ e.g. fetching a second page
 
     stripe events list --count=10 --offset=10
 
-
-### Interactive Menus
-
-Passing NO (or partial) arguments to any operation, will trigger an interactive menu
-
-    $ stripe charges create
-    Amount in dollars: __
-
-or
-
-    $ stripe charges create [--amount=AMOUNT]
-    Name on Card: __
-
 ### Exception Recovery
 
 Api errors are rescued and their messages displayed for you to read.  No more ```barfing``` to ```stdout```
@@ -143,7 +130,7 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe charges create          # Create a charge
       stripe charges find ID         # Find a charge
       stripe charges help [COMMAND]  # Describe subcommands or one specific subcommand
-      stripe charges list            # List charges
+      stripe charges list            # List charges (optionally by customer_id)
       stripe charges refund ID       # Refund a charge
 
 ### Tokens
@@ -221,7 +208,7 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
     Commands:
       stripe transactions find ID         # Find a transaction
       stripe transactions help [COMMAND]  # Describe subcommands or one specific subcommand
-      stripe transactions list [TYPE]     # List transactions, optionaly filter by type: ( charge refund adjustment application_fee application_fee_refund transfer transfer_failure )
+      stripe transactions list [TYPE]     # List transactions, optionaly filter by type:(charge refund adjustment application_fee application_fee_refund transfer transfer_failure)
 
 ### Recipients
 
@@ -231,6 +218,16 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe recipients find ID         # Find a recipient
       stripe recipients help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe recipients list            # List recipients
+
+### Refunds
+
+Though ```refund```  is still a supported operation of the ```charges``` command. The ```refunds``` command offers additional functionality.
+
+    Commands:
+      stripe refunds create --charge=CHARGE   # apply a new refund to CHARGE charge
+      stripe refunds find ID --charge=CHARGE  # Find ID refund of CHARGE charge
+      stripe refunds help [COMMAND]           # Describe subcommands or one specific subcommand
+      stripe refunds list --charge=CHARGE     # List refunds for CHARGE charge
 
 ### Transfers
 
