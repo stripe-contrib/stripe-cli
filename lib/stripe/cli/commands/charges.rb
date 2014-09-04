@@ -38,12 +38,12 @@ module Stripe
 
         desc "create", "Create a charge"
         option :customer, :desc => "The ID of an existing customer to charge"
-        option :card, :aliases => :token, :desc => "credit card Token or ID. May also be created interactively."
-        option :card_number, :aliases => :number
-        option :card_exp_month, :aliases => :exp_month, :desc => "Two digit expiration month of card"
-        option :card_exp_year, :aliases => :exp_year, :desc => "Four digit expiration year of card"
-        option :card_cvc, :aliases => :cvc, :desc => "Three or four digit security code located on the back of card"
-        option :card_name, :aliases => :name, :desc => "Cardholder's full name as displayed on card"
+        option :card, :aliases => "--token", :desc => "credit card Token or ID. May also be created interactively."
+        option :card_number, :aliases => "--number"
+        option :card_exp_month, :aliases => "--exp-month", :desc => "Two digit expiration month of card"
+        option :card_exp_year, :aliases => "--exp-year", :desc => "Four digit expiration year of card"
+        option :card_cvc, :aliases => "--cvc", :desc => "Three or four digit security code located on the back of card"
+        option :card_name, :aliases => "--name", :desc => "Cardholder's full name as displayed on card"
         option :amount, :type => :numeric, :desc => "Charge amount in dollars"
         option :currency, :default => "usd"
         option :description, :desc => "Arbitrary description of charge"

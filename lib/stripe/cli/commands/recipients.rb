@@ -27,21 +27,21 @@ module Stripe
 
         desc "create", "create a new recipient. Either an Individual or a Corporation."
         option :name, :desc => "Full legal name of Individual or Corporation"
-        option :type, :enum => %w( individual corporation )
-        option :individual, :type => :boolean, :aliases => :i
-        option :corporation, :type => :boolean, :aliases => :c
+        option :type, :enum => %w( individual corporation ), :desc => "recipient type,"
+        option :individual, :type => :boolean, :aliases => :i, :desc => "flag specifying recipient should be of type Individual"
+        option :corporation, :type => :boolean, :aliases => :c, :desc => "flag specifying recipient should be of type Corporation"
         option :tax_id, :type => :numeric
         option :email
         option :description
-        option :bank_account
+        option :bank_account, :aliases => "--account"
         option :country
         option :account_number
         option :routing_number
-        option :card, :aliases => :token, :desc => "credit card Token or ID. May also be created interactively."
-        option :card_number, :aliases => :number
-        option :card_exp_month, :aliases => :exp_month, :desc => "Two digit expiration month of card"
-        option :card_exp_year, :aliases => :exp_year, :desc => "Four digit expiration year of card"
-        option :card_cvc, :aliases => :cvc, :desc => "Three or four digit security code located on the back of card"
+        option :card, :aliases => "--token", :desc => "credit card Token or ID. May also be created interactively."
+        option :card_number, :aliases => "--number"
+        option :card_exp_month, :aliases => "--exp-month", :desc => "Two digit expiration month of card"
+        option :card_exp_year, :aliases => "--exp-year", :desc => "Four digit expiration year of card"
+        option :card_cvc, :aliases => "--cvc", :desc => "Three or four digit security code located on the back of card"
         option :card_name, :desc => "Cardholder's full name as displayed on card"
         option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         def create

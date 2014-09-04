@@ -4,20 +4,22 @@ module Stripe
     private
 
     def credit_card options = {}
+      card = options.delete(:card) || {}
       {
-        :name      => options.delete(:card_name)      || ask('Name on Card:'),
-        :number    => options.delete(:card_number)    || ask('Card number:'),
-        :cvc       => options.delete(:card_cvc)       || ask('CVC code:'),
-        :exp_month => options.delete(:card_exp_month) || ask('expiration month:'),
-        :exp_year  => options.delete(:card_exp_year)  || ask('expiration year:')
+        :name      => card["name"]      || options.delete(:card_name)      || ask('Name on Card:'),
+        :number    => card["number"]    || options.delete(:card_number)    || ask('Card number:'),
+        :cvc       => card["cvc"]       || options.delete(:card_cvc)       || ask('CVC code:'),
+        :exp_month => card["exp-month"] || options.delete(:card_exp_month) || ask('expiration month:'),
+        :exp_year  => card["exp-year"]  || options.delete(:card_exp_year)  || ask('expiration year:')
       }
     end
 
     def bank_account options = {}
+      account = options.delete(:bank_account) || {}
       {
-        :account_number => options.delete(:account_number) || ask('Account Number:'),
-        :routing_number => options.delete(:routing_number) || ask('Routing Number:'),
-        :country => options.delete(:country) || 'US'
+        :account_number => account["account-number"] || options.delete(:account_number) || ask('Account Number:'),
+        :routing_number => account["routing-number"] || options.delete(:routing_number) || ask('Routing Number:'),
+        :country => account["country"] || options.delete(:country) || 'US'
       }
     end
 

@@ -30,12 +30,12 @@ module Stripe
         option :plan, :desc => "the plan to assign to CUSTOMER customer"
         option :coupon, :desc => "id of a coupon to apply"
         option :trial_end, :desc => "apply a trial period until this date. Override plan's trial period."
-        option :card, :aliases => :token, :desc => "credit card Token or ID. May also be created interactively."
-        option :card_number, :aliases => :number
-        option :card_exp_month, :aliases => :exp_month, :desc => "Two digit expiration month of card"
-        option :card_exp_year, :aliases => :exp_year, :desc => "Four digit expiration year of card"
-        option :card_cvc, :aliases => :cvc, :desc => "Three or four digit security code located on the back of card"
-        option :card_name, :aliases => :name, :desc => "Cardholder's full name as displayed on card"
+        option :card, :aliases => "--token", :desc => "credit card Token or ID. May also be created interactively."
+        option :card_number, :aliases => "--number"
+        option :card_exp_month, :aliases => "--exp-month", :desc => "Two digit expiration month of card"
+        option :card_exp_year, :aliases => "--exp-year", :desc => "Four digit expiration year of card"
+        option :card_cvc, :aliases => "--cvc", :desc => "Three or four digit security code located on the back of card"
+        option :card_name, :aliases => "--name", :desc => "Cardholder's full name as displayed on card"
         option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         option :customer, :aliases => :c, :required => true, :desc => "ID of customer receiving the new subscription"
         def create
