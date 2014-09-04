@@ -1,5 +1,5 @@
 module Stripe
   module CLI
-    VERSION = "1.5.0"
+    VERSION = "1.5.1"
   end
 end

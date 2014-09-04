@@ -82,7 +82,7 @@ module Stripe
         when Stripe::ListObject
           inspect object.data
         when Stripe::StripeObject
-          inspect object.to_hash
+          inspect object.instance_variable_get(:@values)
         when Numeric
           object > 1000000000 ? Time.at( object ) : object
         else
