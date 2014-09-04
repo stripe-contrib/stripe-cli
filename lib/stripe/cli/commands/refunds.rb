@@ -2,13 +2,15 @@ module Stripe
   module CLI
     module Commands
       class Refunds < Command
+        include Stripe::Utils
+
         desc "list", "List refunds for CHARGE charge"
         option :starting_after, :desc => "The ID of the last object in the previous paged result set. For cursor-based pagination."
         option :ending_before, :desc => "The ID of the first object in the previous paged result set, when paging backwards through the list."
         option :limit, :desc => "a limit on the number of resources returned, between 1 and 100"
         option :offset, :desc => "the starting index to be used, relative to the entire list"
         option :count, :desc => "depricated: use limit"
-        option :charge, :aliases => :c, :required => true, :desc => "Id of charge to search"
+        option :charge, :aliases => :c, :required => true, :desc => "Id of charge to search within"
         def list
           if charge = retrieve_charge(options.delete :charge)
             super charge.refunds, options
@@ -25,24 +27,13 @@ module Stripe
 
         desc "create", "apply a new refund to CHARGE charge"
         option :amount, :type => :numeric, :desc => "Refund amount in dollars. (Entire charge by default)"
-        option :metadata, :type => :hash
+        option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         option :refund_application_fee, :type => :boolean, :default => false, :desc => "Whether or not to refund the application fee"
         option :charge, :aliases => :c, :required => true, :desc => "Id of charge to apply refund"
         def create
           options[:amount] = (Float(options[:amount]) * 100).to_i if options[:amount]
           if charge = retrieve_charge(options.delete :charge)
             super charge.refunds, options
-          end
-        end
-
-        private
-
-        def retrieve_charge id
-          begin
-            Stripe::Charge.retrieve(id, api_key)
-          rescue Exception => e
-            ap e.message
-            false
           end
         end
 

@@ -9,7 +9,7 @@ module Stripe
         option :limit, :desc => "a limit on the number of resources returned, between 1 and 100"
         option :offset, :desc => "the starting index to be used, relative to the entire list"
         option :count, :desc => "depricated: use limit"
-        option :customer
+        option :customer, :desc => "a customer ID to filter results by"
         def list
           super Stripe::Invoice, options
         end

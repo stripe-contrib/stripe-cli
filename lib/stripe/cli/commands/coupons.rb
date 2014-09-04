@@ -29,11 +29,11 @@ module Stripe
         option :percent_off, :type => :numeric
         option :amount_off, :type => :numeric
         option :duration, :enum => [ :forever, :once, :repeating ]
-        option :redeem_by, :type => :numeric, :default => nil
+        option :redeem_by, :desc => "coupon will no longer be accepted after this date."
         option :max_redemptions, :type => :numeric
         option :duration_in_months
         option :currency, :default => 'usd'
-        option :metadata, :type => :hash
+        option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         def create
           unless options[:percent_off] || options[:amount_off]
             discount = ask('(e.g. 25% or $10) specify discount:')

@@ -28,7 +28,7 @@ module Stripe
         option :statement_descriptor
         option :balance, :type => :boolean
         option :self, :type => :boolean
-        option :metadata, :type => :hash
+        option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         def create
           if options.delete(:balance) == true
             options[:amount] = Stripe::Balance.retrieve(api_key).available.first.amount

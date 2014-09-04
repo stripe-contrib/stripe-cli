@@ -1,3 +1,4 @@
+require 'chronic'
 module Stripe
   module CLI
     module Commands
@@ -25,20 +26,20 @@ module Stripe
         end
 
         desc "create", "Create a new customer"
-        option :description
-        option :email
-        option :plan
-        option :coupon
-        option :quantity
-        option :trial_end
-        option :account_balance
-        option :card
-        option :card_number
-        option :card_exp_month
-        option :card_exp_year
-        option :card_cvc
-        option :card_name
-        option :metadata, :type => :hash
+        option :description, :desc => "Arbitrary description to be displayed in Stripe Dashboard."
+        option :email, :desc => "Customer's email address. Will be displayed in Stripe Dashboard."
+        option :plan, :desc => "The ID of a Plan this customer should be subscribed to. Requires a credit card."
+        option :coupon, :desc => "The ID of a Coupon to be applied to all of Customer's recurring charges"
+        option :quantity, :desc => "A multiplier for the plan option. defaults to `1'"
+        option :trial_end, :desc => "apply a trial period until this date. Override plan's trial period."
+        option :account_balance, :desc => "customer's starting account balance in cents. A positive amount will be added to the next invoice while a negitive amount will act as a credit."
+        option :card, :aliases => :token, :desc => "credit card Token or ID. May also be created interactively."
+        option :card_number, :aliases => :number
+        option :card_exp_month, :aliases => :exp_month, :desc => "Two digit expiration month of card"
+        option :card_exp_year, :aliases => :exp_year, :desc => "Four digit expiration year of card"
+        option :card_cvc, :aliases => :cvc, :desc => "Three or four digit security code located on the back of card"
+        option :card_name, :aliases => :name, :desc => "Cardholder's full name as displayed on card"
+        option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         def create
           options[:email]       ||= ask('Customer\'s Email:')
           options[:description] ||= ask('Provide a description:')
@@ -50,7 +51,10 @@ module Stripe
           end
           options.delete( :coupon ) if options[:coupon] == ""
 
-          options[:card] ||= credit_card( options ) if options[:plan]
+          if options[:plan]
+            options[:card] ||= credit_card( options )
+            options[:trial_end] = Chronic.parse(options[:trial_end]).to_i.to_s if options[:trial_end]
+          end
 
           super Stripe::Customer, options
         end

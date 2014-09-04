@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Stripe::CLI::Command do
+
 	let(:_id_) { "random-id-string" }
 
 	describe "#find" do

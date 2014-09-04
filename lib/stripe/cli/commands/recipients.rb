@@ -2,6 +2,7 @@ module Stripe
   module CLI
     module Commands
       class Recipients < Command
+        include Stripe::Utils
 
         desc "list", "List recipients"
         option :starting_after, :desc => "The ID of the last object in the previous paged result set. For cursor-based pagination."
@@ -24,8 +25,8 @@ module Stripe
           super Stripe::Recipient, recipient_id
         end
 
-        desc "create", "create a new recipient"
-        option :name
+        desc "create", "create a new recipient. Either an Individual or a Corporation."
+        option :name, :desc => "Full legal name of Individual or Corporation"
         option :type, :enum => %w( individual corporation )
         option :individual, :type => :boolean, :aliases => :i
         option :corporation, :type => :boolean, :aliases => :c
@@ -36,33 +37,56 @@ module Stripe
         option :country
         option :account_number
         option :routing_number
-        option :metadata, :type => :hash
+        option :card, :aliases => :token, :desc => "credit card Token or ID. May also be created interactively."
+        option :card_number, :aliases => :number
+        option :card_exp_month, :aliases => :exp_month, :desc => "Two digit expiration month of card"
+        option :card_exp_year, :aliases => :exp_year, :desc => "Four digit expiration year of card"
+        option :card_cvc, :aliases => :cvc, :desc => "Three or four digit security code located on the back of card"
+        option :card_name, :desc => "Cardholder's full name as displayed on card"
+        option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         def create
-          options[:name]   ||= ask('Recipient\'s Name:')
-          options[:email]  ||= ask('Recipient\'s Email:')
-          options[:type]   ||= if options.delete(:individual) then 'individual'
-          elsif options.delete(:corporation) then 'corporation'
-          else  yes?('Corporation? (Y/n)') ? 'corporation' : 'individual'
-          end
-          options[:tax_id] ||= case options[:type]
-          when 'individual' then ask('Tax ID (SSN):')
-          when 'corporation' then ask('Tax ID (EIN):')
-          end
+          options[:type] ||= recipient_type(options)
+
+          case options[:type]
+          when 'individual'
+            options[:name]    ||= ask('Recipient\'s full, legal name:')
+            options[:tax_id]  ||= ask('Tax ID (SSN):')
+          when 'corporation'
+            options[:name]    ||= ask('Full Incorporated Name:')
+            options[:tax_id]  ||= ask('Tax ID (EIN):')
+          end unless options[:name] && options[:tax_id]
+
           options[:tax_id].gsub!(/[^\d]/,"")
 
-          unless options[:bank_account]
-            options[:country] ||= 'US'
-            options[:account_number] ||= ask('Bank Account Number:')
-            options[:routing_number] ||= ask('Bank Routing Number:')
+          options[:email]  ||= ask('Email Address:')
 
-            options[:bank_account] = {
-              :country        => options.delete(:country),
-              :account_number => options.delete(:account_number),
-              :routing_number => options.delete(:routing_number)
-            }
+          unless options[:card] || no?('add a Debit Card? [yN]',:yellow)
+            options[:card_name] ||= options[:name] if yes?('Name on card same as recipient name? [yN]')
+            options[:card] = credit_card( options )
           end
 
+          unless options[:bank_account] || no?('add a Bank Account? [yN]',:yellow)
+            options[:bank_account] = bank_account( options )
+          end
+
+          options.delete :country
+          options.delete :account_number
+          options.delete :routing_number
+          options.delete :card_number
+          options.delete :card_exp_month
+          options.delete :card_exp_year
+          options.delete :card_cvc
+          options.delete :card_name
+
           super Stripe::Recipient, options
+        end
+
+        private
+
+        def recipient_type opt
+          opt.delete(:individual) ? 'individual' :
+          opt.delete(:corporation) ? 'corporation' :
+          yes?('Corporation? [yN]') ? 'corporation' : 'individual'
         end
       end
     end

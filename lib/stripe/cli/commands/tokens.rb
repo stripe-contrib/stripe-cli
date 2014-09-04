@@ -10,42 +10,26 @@ module Stripe
         end
 
         desc "create TYPE", "create a new token of type TYPE(card or account)"
-        option :card, :type => :hash
-        option :card_name
-        option :card_number
-        option :card_cvc
-        option :card_exp_month
-        option :card_exp_year
+        option :card, :type => :hash, :desc => "hash of card parameters which may also be provided individually or added interactively if not provided."
+        option :card_number, :aliases => :number
+        option :card_exp_month, :aliases => :exp_month, :desc => "Two digit expiration month of card"
+        option :card_exp_year, :aliases => :exp_year, :desc => "Four digit expiration year of card"
+        option :card_cvc, :aliases => :cvc, :desc => "Three or four digit security code located on the back of card"
+        option :card_name, :aliases => :name, :desc => "Cardholder's full name as displayed on card"
         option :bank_account, :type => :hash
         option :country
         option :routing_number
         option :account_number
         def create type
           case type
-          when 'card', 'credit_card'
-            options[:card] ||= credit_card( options )
-            options.delete(:bank_account)
-            options.delete(:country)
-            options.delete(:routing_number)
-            options.delete(:account_number)
-          when 'account', 'bank_account'
-            unless options[:bank_account]
-              options[:account_number] ||= ask('Account Number:')
-              options[:routing_number] ||= ask('Routing Number:')
-              options[:country]        ||= 'US'
-
-              options[:bank_account] = {
-                :account_number => options.delete(:account_number),
-                :routing_number => options.delete(:routing_number),
-                :country => options.delete(:country)
-              }
-              options.delete(:card)
-              options.delete(:card_name)
-              options.delete(:card_number)
-              options.delete(:card_cvc)
-              options.delete(:card_exp_month)
-              options.delete(:card_exp_year)
-            end
+          when 'card', 'credit_card', 'credit card'
+            credit_card = options[:card] ||= credit_card( options )
+            options = {}
+            options[:card] = credit_card
+          when 'account', 'bank_account', 'bank account'
+            bank_account = options[:bank_account] ||= bank_account( options )
+            options = {}
+            options[:bank_account] = bank_account
           end
 
           super Stripe::Token, options
