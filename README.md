@@ -14,6 +14,78 @@ Uses [AwesomePrint](https://github.com/michaeldv/awesome_print) to provide very 
 
 Note that Date/Time stamps are converted automatically.  No more Epoch/Unix timestamp garbage!
 
+## Contents
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+    - [Interactive Menus](#interactive-menus)
+    - [cursor-based pagination](#cursorbased-pagination)
+    - [Exception Recovery](#exception-recovery)
+    - [Charges](#charges)
+        - [Capture](#capture)
+        - [Create](#create)
+        - [Find](#find)
+        - [List](#list)
+        - [Refund](#refund)
+    - [Tokens](#tokens)
+        - [Create](#create)
+        - [Find](#find)
+    - [Cards](#cards)
+        - [Create](#create)
+        - [Delete](#delete)
+        - [Find](#find)
+        - [List](#list)
+    - [Customers](#customers)
+        - [Create](#create)
+        - [Delete](#delete)
+        - [Find](#find)
+        - [List](#list)
+    - [Subscriptions](#subscriptions)
+        - [Cancel](#cancel)
+        - [Create](#create)
+        - [Find](#find)
+        - [List](#list)
+        - [Reactivate](#reactivate)
+    - [Invoices](#invoices)
+        - [Close](#close)
+        - [Find](#find)
+        - [List](#list)
+        - [Pay](#pay)
+        - [Upcoming](#upcoming)
+    - [Plans](#plans)
+        - [Create](#create)
+        - [Delete](#delete)
+        - [Find](#find)
+        - [List](#list)
+    - [Coupons](#coupons)
+        - [Create](#create)
+        - [Delete](#delete)
+        - [Find](#find)
+        - [List](#list)
+    - [Events](#events)
+        - [Find](#find)
+        - [List](#list)
+    - [BalanceTransactions](#balancetransactions)
+        - [Find](#find)
+        - [List](#list)
+    - [Recipients](#recipients)
+        - [Create](#create)
+        - [Delete](#delete)
+        - [Find](#find)
+        - [List](#list)
+    - [Refunds](#refunds)
+        - [Create](#create)
+        - [Find](#find)
+        - [List](#list)
+    - [Transfers](#transfers)
+        - [Create](#create)
+        - [Find](#find)
+        - [List](#list)
+- [Road Map](#road-map)
+
+<!-- end toc -->
+
 ## Installation
 
     $ gem install stripe-cli
@@ -22,7 +94,7 @@ Note that Date/Time stamps are converted automatically.  No more Epoch/Unix time
 
 For authentication, pass your secret key using the `-k` or `--key` option
 
-    $ stripe events list -k XXXXXXXXXXXXXXXXXXXXXX
+    $ stripe events list -k sk_test_abcdef123456
 
 To use a specific api version, pass in the `-v` or `--version` option
 
@@ -133,12 +205,92 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe charges list            # List charges (optionally by customer_id)
       stripe charges refund ID       # Refund a charge
 
+#### Capture
+
+    Usage:
+      stripe charges capture ID
+
+#### Create
+
+    Usage:
+      stripe charges create
+
+    Options:
+          [--customer=CUSTOMER]                           # The ID of an existing customer to charge
+          [--token | --card=CARD]                         # credit card Token or ID. May also be created interactively.
+          [--number | --card-number=CARD_NUMBER]          # credit card number. usually 16 digits long
+          [--exp-month | --card-exp-month=CARD_EXP_MONTH] # Two digit expiration month of card
+          [--exp-year | --card-exp-year=CARD_EXP_YEAR]    # Four digit expiration year of card
+          [--cvc | --card-cvc=CARD_CVC]                   # Three or four digit security code located on the back of card
+          [--name | --card-name=CARD_NAME]                # Cardholder's full name as displayed on card
+          [--amount=N]                                    # Charge amount in dollars
+          [--currency=CURRENCY]                           # 3-letter ISO code for currency
+                                                          # Default: usd
+          [--description=DESCRIPTION]                     # Arbitrary description of charge
+          [--capture], [--no-capture]                     # Whether or not to immediately capture the charge. Uncaptured charges expire in 7 days
+                                                          # Default: true
+          [--metadata=key:value]                          # A key/value store of additional user-defined data
+          [--statement-description=STATEMENT_DESCRIPTION] # Displayed alongside your company name on your customer's card statement (15 character max)
+          [--receipt-email=RECEIPT_EMAIL]                 # Email address to send receipt to. Overrides default email settings.
+
+#### Find
+
+    Usage:
+      stripe charges find ID
+
+#### List
+
+    Usage:
+      stripe charges list
+
+    Options:
+          [--starting-after=STARTING_AFTER]  # The ID of the last object in the previous paged result set. For cursor-based pagination.
+          [--ending-before=ENDING_BEFORE]    # The ID of the first object in the previous paged result set, when paging backwards through the list.
+          [--limit=LIMIT]                    # a limit on the number of resources returned, between 1 and 100
+          [--offset=OFFSET]                  # the starting index to be used, relative to the entire list
+          [--count=COUNT]                    # depricated: use limit
+          [--customer=CUSTOMER]              # a customer ID to filter results by
+
+#### Refund
+
+    Usage:
+      stripe charges refund ID
+
+    Options:
+          [--amount=N]                                               # Refund amount in dollars. (Entire charge by default)
+          [--metadata=key:value]                                     # a key/value store of additional user-defined data
+          [--refund-application-fee], [--no-refund-application-fee]  # Whether or not to refund the application fee
+
+
 ### Tokens
 
     Commands:
       stripe tokens create TYPE     # Create a new token of type TYPE(card or account)
       stripe tokens find ID         # Find a Token
       stripe tokens help [COMMAND]  # Describe subcommands or one specific subcommand
+
+#### Create
+
+    Usage:
+      stripe token create TYPE
+
+    Options:
+          [--card=key:value]                              # hash of card params. params may also be provided individually or added interactively.
+          [--number | --card-number=CARD_NUMBER]          # credit card number. usually 16 digits long
+          [--exp-month | --card-exp-month=CARD_EXP_MONTH] # Two digit expiration month of card
+          [--exp-year | --card-exp-year=CARD_EXP_YEAR]    # Four digit expiration year of card
+          [--cvc | --card-cvc=CARD_CVC]                   # Three or four digit security code located on the back of card
+          [--name | --card-name=CARD_NAME]                # Cardholder's full name as displayed on card
+          [--account | --bank-account=key:value]          # hash of account params. params may also be provided individually or added interactively.
+          [--country=COUNTRY]
+          [--routing-number=ROUTING_NUMBER]
+          [--account-number=ACCOUNT_NUMBER]
+
+#### Find
+
+    Usage:
+      stripe token find ID
+
 
 ### Cards
 
@@ -149,6 +301,49 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe cards help [COMMAND]           # Describe subcommands or one specific subcommand
       stripe cards list --owner=OWNER       # List cards for OWNER (customer or recipient)
 
+#### Create
+
+    Usage:
+      stripe card create --customer, --recipient, --owner=OWNER
+
+    Options:
+          [--token | --card=CARD]                     # credit card Token or ID. May also be created interactively.
+          [--number | --card-number=CARD_NUMBER]
+          [--exp-month | --card-exp-month=EXP_MONTH]  # Two digit expiration month of card
+          [--exp-year | --card-exp-year=EXP_YEAR]     # Four digit expiration year of card
+          [--cvc | --card-cvc=CARD_CVC]               # Three or four digit security code located on the back of card
+          [--name | --card-name=CARD_NAME]            # Cardholder's full name as displayed on card
+          --customer, --recipient, --owner=OWNER      # id of customer or recipient receiving new card
+
+#### Delete
+
+    Usage:
+      stripe card delete ID --owner=OWNER
+
+    Options:
+          --owner=OWNER       # id of customer or recipient to search within
+
+#### Find
+
+    Usage:
+      stripe card find ID --owner=OWNER
+
+    Options:
+          --owner=OWNER       # id of customer or recipient to search within
+
+#### List
+
+    Usage:
+      stripe cards list --owner=OWNER
+
+    Options:
+          [--starting-after=STARTING_AFTER]  # The ID of the last object in the previous paged result set. For cursor-based pagination.
+          [--ending-before=ENDING_BEFORE]    # The ID of the first object in the previous paged result set, when paging backwards through the list.
+          [--limit=LIMIT]                    # a limit on the number of resources returned, between 1 and 100
+          [--offset=OFFSET]                  # the starting index to be used, relative to the entire list
+          [--count=COUNT]                    # depricated: use limit
+          --owner=OWNER                      # id of customer or recipient to search within
+
 ### Customers
 
     Commands:
@@ -157,6 +352,50 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe customers find ID         # Find a customer
       stripe customers help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe customers list            # List customers
+
+#### Create
+
+    Usage:
+      stripe customer create
+
+    Options:
+          [--description=DESCRIPTION]                     # Arbitrary description to be displayed in Stripe Dashboard.
+          [--email=EMAIL]                                 # Customer's email address. Will be displayed in Stripe Dashboard.
+          [--plan=PLAN]                                   # The ID of a Plan this customer should be subscribed to. Requires a credit card.
+          [--coupon=COUPON]                               # The ID of a Coupon to be applied to all of Customer's recurring charges
+          [--quantity=QUANTITY]                           # A multiplier for the plan option. defaults to `1'
+          [--trial-end=TRIAL_END]                         # apply a trial period until this date. Override plan's trial period.
+          [--account-balance=ACCOUNT_BALANCE]             # customer's starting account balance in cents. A positive amount will be added to the next invoice while a negitive amount will act as a credit.
+          [--token | --card=CARD]                         # credit card Token or ID. May also be created interactively.
+          [--number | --card-number=CARD_NUMBER]          # credit card number. usually 16 digits long
+          [--exp-month | --card-exp-month=CARD_EXP_MONTH] # Two digit expiration month of card
+          [--exp-year | --card-exp-year=CARD_EXP_YEAR]    # Four digit expiration year of card
+          [--cvc | --card-cvc=CARD_CVC]                   # Three or four digit security code located on the back of card
+          [--name | --card-name=CARD_NAME]                # Cardholder's full name as displayed on card
+          [--metadata=key:value]                          # a key/value store of additional user-defined data
+
+#### Delete
+
+    Usage:
+      stripe customer delete ID
+
+#### Find
+
+    Usage:
+      stripe customer find ID
+
+#### List
+
+    Usage:
+      stripe customers list
+
+    Options:
+          [--starting-after=STARTING_AFTER]  # The ID of the last object in the previous paged result set. For cursor-based pagination.
+          [--ending-before=ENDING_BEFORE]    # The ID of the first object in the previous paged result set, when paging backwards through the list.
+          [--limit=LIMIT]                    # a limit on the number of resources returned, between 1 and 100
+          [--offset=OFFSET]                  # the starting index to be used, relative to the entire list
+          [--count=COUNT]                    # depricated: use limit
+
 
 ### Subscriptions
 
@@ -168,6 +407,63 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe subscriptions list --customer=CUSTOMER           # List subscriptions for CUSTOMER customer
       stripe subscriptions reactivate ID --customer=CUSTOMER  # reactivate auto-renewal if `cancel-at-period-end` was set to true
 
+#### Cancel
+
+    Usage:
+      stripe subscription cancel ID c, --customer=CUSTOMER
+
+    Options:
+          [--at-period-end], [--no-at-period-end]  # delay cancellation until end of current period
+                                                   # default: false
+          c, --customer=CUSTOMER                   # id of customer to search within
+
+#### Create
+
+    Usage:
+      stripe subscription create c, --customer=CUSTOMER
+
+    Options:
+          [--plan=PLAN]                                   # the plan to assign to CUSTOMER customer
+          [--coupon=COUPON]                               # id of a coupon to apply
+          [--trial-end=TRIAL_END]                         # apply a trial period until this date. Override plan's trial period.
+          [--token | --card=CARD]                         # credit card Token or ID. May also be created interactively.
+          [--number | --card-number=CARD_NUMBER]          # credit card number. usually 16 digits long
+          [--exp-month | --card-exp-month=CARD_EXP_MONTH] # Two digit expiration month of card
+          [--exp-year | --card-exp-year=CARD_EXP_YEAR]    # Four digit expiration year of card
+          [--cvc | --card-cvc=CARD_CVC]                   # Three or four digit security code located on the back of card
+          [--name | --card-name=CARD_NAME]                # Cardholder's full name as displayed on card
+          [--metadata=key:value]                          # a key/value store of additional user-defined data
+          c, --customer=CUSTOMER                          # ID of customer receiving the new subscription
+
+#### Find
+
+    Usage:
+      stripe subscription find ID c, --customer=CUSTOMER
+
+    Options:
+          c, --customer=CUSTOMER  # ID of customer to search within
+
+#### List
+
+    Usage:
+      stripe subscriptions list c, --customer=CUSTOMER
+
+    Options:
+          [--starting-after=STARTING_AFTER]  # The ID of the last object in the previous paged result set. For cursor-based pagination.
+          [--ending-before=ENDING_BEFORE]    # The ID of the first object in the previous paged result set, when paging backwards through the list.
+          [--limit=LIMIT]                    # a limit on the number of resources returned, between 1 and 100
+          [--offset=OFFSET]                  # the starting index to be used, relative to the entire list
+          [--count=COUNT]                    # depricated: use limit
+          c, --customer=CUSTOMER             # ID of customer to search within
+
+#### Reactivate
+
+    Usage:
+      stripe subscription reactivate ID c, --customer=CUSTOMER
+
+    Options:
+          c, --customer=CUSTOMER  # id of customer to search within
+
 ### Invoices
 
     Commands:
@@ -178,6 +474,40 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe invoices pay ID             # trigger an open invoice to be paid immediately
       stripe invoices upcoming CUSTOMER  # find the upcoming invoice for CUSTOMER
 
+#### Close
+
+    Usage:
+      stripe invoice close ID
+
+#### Find
+
+    Usage:
+      stripe invoice find ID
+
+#### List
+
+    Usage:
+      stripe invoice list
+
+    Options:
+          [--starting-after=STARTING_AFTER]  # The ID of the last object in the previous paged result set. For cursor-based pagination.
+          [--ending-before=ENDING_BEFORE]    # The ID of the first object in the previous paged result set, when paging backwards through the list.
+          [--limit=LIMIT]                    # a limit on the number of resources returned, between 1 and 100
+          [--offset=OFFSET]                  # the starting index to be used, relative to the entire list
+          [--count=COUNT]                    # depricated: use limit
+          [--customer=CUSTOMER]              # a customer ID to filter results by
+
+#### Pay
+
+    Usage:
+      stripe invoice pay ID
+
+#### Upcoming
+
+    Usage:
+      stripe invoice upcoming CUSTOMER
+
+
 ### Plans
 
     Commands:
@@ -186,6 +516,19 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe plans find ID         # Find a plan
       stripe plans help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe plans list            # List plans
+
+#### Create
+
+
+#### Delete
+
+
+#### Find
+
+
+#### List
+
+
 
 ### Coupons
 
@@ -196,6 +539,19 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe coupons help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe coupons list            # List coupons
 
+#### Create
+
+
+#### Delete
+
+
+#### Find
+
+
+#### List
+
+
+
 ### Events
 
     Commands:
@@ -203,12 +559,26 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe events help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe events list            # List events
 
+#### Find
+
+
+#### List
+
+
+
 ### BalanceTransactions
 
     Commands:
       stripe transactions find ID         # Find a transaction
       stripe transactions help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe transactions list [TYPE]     # List transactions, optionaly filter by type:(charge refund adjustment application_fee application_fee_refund transfer transfer_failure)
+
+#### Find
+
+
+#### List
+
+
 
 ### Recipients
 
@@ -218,6 +588,19 @@ Api errors are rescued and their messages displayed for you to read.  No more ``
       stripe recipients find ID         # Find a recipient
       stripe recipients help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe recipients list            # List recipients
+
+#### Create
+
+
+#### Delete
+
+
+#### Find
+
+
+#### List
+
+
 
 ### Refunds
 
@@ -229,6 +612,16 @@ Though ```refund```  is still a supported operation of the ```charges``` command
       stripe refunds help [COMMAND]           # Describe subcommands or one specific subcommand
       stripe refunds list --charge=CHARGE     # List refunds for CHARGE charge
 
+#### Create
+
+
+#### Find
+
+
+#### List
+
+
+
 ### Transfers
 
     Commands:
@@ -237,7 +630,13 @@ Though ```refund```  is still a supported operation of the ```charges``` command
       stripe transfers help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe transfers list            # List transfers, optionaly filter by recipient or transfer status: ( pending paid failed )
 
-#### Easter Egg Alert!
+#### Create
+
+#### Find
+
+#### List
+
+#### Easter Egg
 
 You can pass the `--balance` flag into `transfer create` to automatically set transfer `amount` equal to your currently available balance.
 
@@ -245,7 +644,6 @@ example:
 
     $ stripe transfer create --balance --recipient=self
 
-> No, its not magic.  The `--balance` flag just triggers a 'preflight' api call to retrieve your current balance and assigns that to the `--amount` option
 
 ## Road Map
 

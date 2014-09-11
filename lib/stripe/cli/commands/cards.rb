@@ -28,7 +28,7 @@ module Stripe
 
         desc "create", "create a new card for OWNER (customer or recipient)"
         option :card, :aliases => "--token", :desc => "credit card Token or ID. May also be created interactively."
-        option :card_number, :aliases => "--number"
+        option :card_number, :aliases => "--number", :desc => "credit card number. usually 16 digits long"
         option :card_exp_month, :aliases => "--exp-month", :desc => "Two digit expiration month of card"
         option :card_exp_year, :aliases => "--exp-year", :desc => "Four digit expiration year of card"
         option :card_cvc, :aliases => "--cvc", :desc => "Three or four digit security code located on the back of card"
