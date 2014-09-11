@@ -14,78 +14,6 @@ Uses [AwesomePrint](https://github.com/michaeldv/awesome_print) to provide very 
 
 Note that Date/Time stamps are converted automatically.  No more Epoch/Unix timestamp garbage!
 
-## Contents
-
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-    - [Interactive Menus](#interactive-menus)
-    - [cursor-based pagination](#cursorbased-pagination)
-    - [Exception Recovery](#exception-recovery)
-    - [Charges](#charges)
-        - [Capture](#capture)
-        - [Create](#create)
-        - [Find](#find)
-        - [List](#list)
-        - [Refund](#refund)
-    - [Tokens](#tokens)
-        - [Create](#create)
-        - [Find](#find)
-    - [Cards](#cards)
-        - [Create](#create)
-        - [Delete](#delete)
-        - [Find](#find)
-        - [List](#list)
-    - [Customers](#customers)
-        - [Create](#create)
-        - [Delete](#delete)
-        - [Find](#find)
-        - [List](#list)
-    - [Subscriptions](#subscriptions)
-        - [Cancel](#cancel)
-        - [Create](#create)
-        - [Find](#find)
-        - [List](#list)
-        - [Reactivate](#reactivate)
-    - [Invoices](#invoices)
-        - [Close](#close)
-        - [Find](#find)
-        - [List](#list)
-        - [Pay](#pay)
-        - [Upcoming](#upcoming)
-    - [Plans](#plans)
-        - [Create](#create)
-        - [Delete](#delete)
-        - [Find](#find)
-        - [List](#list)
-    - [Coupons](#coupons)
-        - [Create](#create)
-        - [Delete](#delete)
-        - [Find](#find)
-        - [List](#list)
-    - [Events](#events)
-        - [Find](#find)
-        - [List](#list)
-    - [BalanceTransactions](#balancetransactions)
-        - [Find](#find)
-        - [List](#list)
-    - [Recipients](#recipients)
-        - [Create](#create)
-        - [Delete](#delete)
-        - [Find](#find)
-        - [List](#list)
-    - [Refunds](#refunds)
-        - [Create](#create)
-        - [Find](#find)
-        - [List](#list)
-    - [Transfers](#transfers)
-        - [Create](#create)
-        - [Find](#find)
-        - [List](#list)
-- [Road Map](#road-map)
-
-<!-- end toc -->
-
 ## Installation
 
     $ gem install stripe-cli
@@ -129,25 +57,7 @@ or, if you'd rather:
 
 If you choose to go this route, make sure to add `.stripecli` to your `.gitignore` files.
 
-## Usage
-
-    Commands:
-      stripe balance         # show currently available & pending balance amounts
-      stripe cards           # find, list, create, & delete cards for both customers & recipients
-      stripe charges         # find, list, create, capture, & refund charges
-      stripe coupons         # find, list, create, & delete coupons
-      stripe customers       # find, list, create, & delete customers
-      stripe events          # find & list events
-      stripe help [COMMAND]  # Describe available commands or one specific command
-      stripe invoices        # find, list, pay, & close invoices
-      stripe plans           # find, list, create, & delete plans
-      stripe recipients      # find, list, create, & delete recipients
-      stripe refunds         # find, list, & create refunds
-      stripe subscriptions   # find, list, create, cancel, & reactivate multiple subscriptions per customer
-      stripe tokens          # find & create tokens for bank accounts & credit cards
-      stripe transactions    # find & list balance transactions
-      stripe transfers       # find, list, & create transfers
-
+## General Features & Flexibility
 
 Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands, including metadata.
 
@@ -200,6 +110,92 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
 
 ![error rescue example](./error_message_display.png)
 
+## Usage
+
+    Commands:
+      stripe balance         # show currently available & pending balance amounts
+      stripe cards           # find, list, create, & delete cards for both customers & recipients
+      stripe charges         # find, list, create, capture, & refund charges
+      stripe coupons         # find, list, create, & delete coupons
+      stripe customers       # find, list, create, & delete customers
+      stripe events          # find & list events
+      stripe help [COMMAND]  # Describe available commands or one specific command
+      stripe invoices        # find, list, pay, & close invoices
+      stripe plans           # find, list, create, & delete plans
+      stripe recipients      # find, list, create, & delete recipients
+      stripe refunds         # find, list, & create refunds
+      stripe subscriptions   # find, list, create, cancel, & reactivate multiple subscriptions per customer
+      stripe tokens          # find & create tokens for bank accounts & credit cards
+      stripe transactions    # find & list balance transactions
+      stripe transfers       # find, list, & create transfers
+
+
+## Command Documentation
+
+- [Charges](#charges)
+    - [Capture](#charge capture)
+    - [Create](#charge create)
+    - [Find](#charge find)
+    - [List](#charges list)
+    - [Refund](#charge refund)
+- [Tokens](#tokens)
+    - [Create](#token create)
+    - [Find](#token find)
+- [Cards](#cards)
+    - [Create](#card create)
+    - [Delete](#card delete)
+    - [Find](#card find)
+    - [List](#cards list)
+- [Customers](#customers)
+    - [Create](#customer create)
+    - [Delete](#customer delete)
+    - [Find](#customer find)
+    - [List](#customers list)
+- [Subscriptions](#subscriptions)
+    - [Cancel](#subscription cancel)
+    - [Create](#subscription create)
+    - [Find](#subscription find)
+    - [List](#subscriptions list)
+    - [Reactivate](#subscription reactivate)
+- [Invoices](#invoices)
+    - [Close](#invoice close)
+    - [Find](#invoice find)
+    - [List](#invoices list)
+    - [Pay](#invoice pay)
+    - [Upcoming](#invoice upcoming)
+- [Plans](#plans)
+    - [Create](#plan create)
+    - [Delete](#plan delete)
+    - [Find](#plan find)
+    - [List](#plans list)
+- [Coupons](#coupons)
+    - [Create](#coupon create)
+    - [Delete](#coupon delete)
+    - [Find](#coupon find)
+    - [List](#coupons list)
+- [Events](#events)
+    - [Find](#event find)
+    - [List](#events list)
+- [BalanceTransactions](#balancetransactions)
+    - [Find](#transaction find)
+    - [List](#transactions list)
+- [Recipients](#recipients)
+    - [Create](#recipient create)
+    - [Delete](#recipient delete)
+    - [Find](#recipient find)
+    - [List](#recipients list)
+- [Refunds](#refunds)
+    - [Create](#refund create)
+    - [Find](#refund find)
+    - [List](#refunds list)
+- [Transfers](#transfers)
+    - [Create](#transfer create)
+    - [Find](#transfer find)
+    - [List](#transfers list)
+
+<!-- end toc -->
+
+
 ### Charges
 
     Commands:
@@ -210,12 +206,12 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe charges list            # List charges (optionally by customer_id)
       stripe charges refund ID       # Refund a charge
 
-#### Capture
+#### Charge Capture
 
     Usage:
       stripe charges capture ID
 
-#### Create
+#### Charge Create
 
     Usage:
       stripe charges create
@@ -238,12 +234,12 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--statement-description=STATEMENT_DESCRIPTION] # Displayed alongside your company name on your customer's card statement (15 character max)
           [--receipt-email=RECEIPT_EMAIL]                 # Email address to send receipt to. Overrides default email settings.
 
-#### Find
+#### Charge Find
 
     Usage:
       stripe charges find ID
 
-#### List
+#### Charges List
 
     Usage:
       stripe charges list
@@ -256,7 +252,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--count=COUNT]                    # depricated: use limit
           [--customer=CUSTOMER]              # a customer ID to filter results by
 
-#### Refund
+#### Charge Refund
 
     Usage:
       stripe charges refund ID
@@ -274,7 +270,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe tokens find ID         # Find a Token
       stripe tokens help [COMMAND]  # Describe subcommands or one specific subcommand
 
-#### Create
+#### Token Create
 
     Usage:
       stripe token create TYPE
@@ -291,7 +287,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--routing-number=ROUTING_NUMBER]
           [--account-number=ACCOUNT_NUMBER]
 
-#### Find
+#### Token Find
 
     Usage:
       stripe token find ID
@@ -306,7 +302,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe cards help [COMMAND]           # Describe subcommands or one specific subcommand
       stripe cards list --owner=OWNER       # List cards for OWNER (customer or recipient)
 
-#### Create
+#### Card Create
 
     Usage:
       stripe card create --customer, --recipient, --owner=OWNER
@@ -320,7 +316,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--name | --card-name=CARD_NAME]            # Cardholder's full name as displayed on card
           --customer, --recipient, --owner=OWNER      # id of customer or recipient receiving new card
 
-#### Delete
+#### Card Delete
 
     Usage:
       stripe card delete ID --owner=OWNER
@@ -328,7 +324,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
     Options:
           --owner=OWNER       # id of customer or recipient to search within
 
-#### Find
+#### Card Find
 
     Usage:
       stripe card find ID --owner=OWNER
@@ -336,7 +332,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
     Options:
           --owner=OWNER       # id of customer or recipient to search within
 
-#### List
+#### Cards List
 
     Usage:
       stripe cards list --owner=OWNER
@@ -358,7 +354,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe customers help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe customers list            # List customers
 
-#### Create
+#### Customer Create
 
     Usage:
       stripe customer create
@@ -379,17 +375,17 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--name | --card-name=CARD_NAME]                # Cardholder's full name as displayed on card
           [--metadata=key:value]                          # a key/value store of additional user-defined data
 
-#### Delete
+#### Customer Delete
 
     Usage:
       stripe customer delete ID
 
-#### Find
+#### Customer Find
 
     Usage:
       stripe customer find ID
 
-#### List
+#### Customers List
 
     Usage:
       stripe customers list
@@ -412,7 +408,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe subscriptions list --customer=CUSTOMER           # List subscriptions for CUSTOMER customer
       stripe subscriptions reactivate ID --customer=CUSTOMER  # reactivate auto-renewal if `cancel-at-period-end` was set to true
 
-#### Cancel
+#### Subscription Cancel
 
     Usage:
       stripe subscription cancel ID c, --customer=CUSTOMER
@@ -422,7 +418,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
                                                    # default: false
           c, --customer=CUSTOMER                   # id of customer to search within
 
-#### Create
+#### Subscription Create
 
     Usage:
       stripe subscription create c, --customer=CUSTOMER
@@ -440,7 +436,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--metadata=key:value]                          # a key/value store of additional user-defined data
           c, --customer=CUSTOMER                          # ID of customer receiving the new subscription
 
-#### Find
+#### Subscription Find
 
     Usage:
       stripe subscription find ID c, --customer=CUSTOMER
@@ -448,7 +444,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
     Options:
           c, --customer=CUSTOMER  # ID of customer to search within
 
-#### List
+#### Subscriptions List
 
     Usage:
       stripe subscriptions list c, --customer=CUSTOMER
@@ -461,7 +457,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--count=COUNT]                    # depricated: use limit
           c, --customer=CUSTOMER             # ID of customer to search within
 
-#### Reactivate
+#### Subscription Reactivate
 
     Usage:
       stripe subscription reactivate ID c, --customer=CUSTOMER
@@ -479,17 +475,17 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe invoices pay ID             # trigger an open invoice to be paid immediately
       stripe invoices upcoming CUSTOMER  # find the upcoming invoice for CUSTOMER
 
-#### Close
+#### Invoice Close
 
     Usage:
       stripe invoice close ID
 
-#### Find
+#### Invoice Find
 
     Usage:
       stripe invoice find ID
 
-#### List
+#### Invoices List
 
     Usage:
       stripe invoice list
@@ -502,12 +498,12 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--count=COUNT]                    # depricated: use limit
           [--customer=CUSTOMER]              # a customer ID to filter results by
 
-#### Pay
+#### Invoice Pay
 
     Usage:
       stripe invoice pay ID
 
-#### Upcoming
+#### Invoice Upcoming
 
     Usage:
       stripe invoice upcoming CUSTOMER
@@ -522,16 +518,16 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe plans help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe plans list            # List plans
 
-#### Create
+#### Plan Create
 
 
-#### Delete
+#### Plan Delete
 
 
-#### Find
+#### Plan Find
 
 
-#### List
+#### Plans List
 
 
 
@@ -544,16 +540,16 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe coupons help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe coupons list            # List coupons
 
-#### Create
+#### Coupon Create
 
 
-#### Delete
+#### Coupon Delete
 
 
-#### Find
+#### Coupon Find
 
 
-#### List
+#### Coupons List
 
 
 
@@ -564,10 +560,10 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe events help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe events list            # List events
 
-#### Find
+#### Event Find
 
 
-#### List
+#### Events List
 
 
 
@@ -578,10 +574,10 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe transactions help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe transactions list [TYPE]     # List transactions, optionaly filter by type:(charge refund adjustment application_fee application_fee_refund transfer transfer_failure)
 
-#### Find
+#### Transaction Find
 
 
-#### List
+#### Transactions List
 
 
 
@@ -594,16 +590,16 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe recipients help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe recipients list            # List recipients
 
-#### Create
+#### Recipient Create
 
 
-#### Delete
+#### Recipient Delete
 
 
-#### Find
+#### Recipient Find
 
 
-#### List
+#### Recipients List
 
 
 
@@ -617,13 +613,13 @@ Though ```refund```  is still a supported operation of the ```charges``` command
       stripe refunds help [COMMAND]           # Describe subcommands or one specific subcommand
       stripe refunds list --charge=CHARGE     # List refunds for CHARGE charge
 
-#### Create
+#### Refund Create
 
 
-#### Find
+#### Refund Find
 
 
-#### List
+#### Refunds List
 
 
 
@@ -635,11 +631,11 @@ Though ```refund```  is still a supported operation of the ```charges``` command
       stripe transfers help [COMMAND]  # Describe subcommands or one specific subcommand
       stripe transfers list            # List transfers, optionaly filter by recipient or transfer status: ( pending paid failed )
 
-#### Create
+#### Transfer Create
 
-#### Find
+#### Transfer Find
 
-#### List
+#### Transfers List
 
 #### Easter Egg
 
@@ -652,6 +648,7 @@ example:
 
 ## Road Map
 
+1. complete command documentation in this readme
 1. `update` command operations
 1. support for `disputes` & dispute handling
 1. support creating/updating config file through cli
