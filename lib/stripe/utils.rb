@@ -7,10 +7,10 @@ module Stripe
       card = options.delete(:card) || {}
       {
         :name      => card["name"]      || options.delete(:card_name)      || ask('Name on Card:'),
-        :number    => card["number"]    || options.delete(:card_number)    || ask('Card number:'),
+        :number    => card["number"]    || options.delete(:card_number)    || ask('Card Number:'),
         :cvc       => card["cvc"]       || options.delete(:card_cvc)       || ask('CVC code:'),
-        :exp_month => card["exp-month"] || options.delete(:card_exp_month) || ask('expiration month:'),
-        :exp_year  => card["exp-year"]  || options.delete(:card_exp_year)  || ask('expiration year:')
+        :exp_month => card["exp-month"] || options.delete(:card_exp_month) || ask('Expiration Month:'),
+        :exp_year  => card["exp-year"]  || options.delete(:card_exp_year)  || ask('Expiration Year:')
       }
     end
 

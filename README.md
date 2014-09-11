@@ -151,31 +151,36 @@ If you choose to go this route, make sure to add `.stripecli` to your `.gitignor
 
 Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands, including metadata.
 
-    $ stripe charges create [--amount=AMOUNT][--description=DESC][--card-number=NUM][--card-cvc=CVC][--card-exp-month=MM][--card-exp-year=YYYY]
+    $ stripe charges create  --amount=0998  --description=a\ must\ have  --number=4242424242424242  --cvc=123  --exp-month=10  --exp-year=2020
 
 or
 
-    $ stripe charges create [--amount=AMOUNT][--card=TOKEN_ID][--metadata=foo:bar details:"product# 4369"]
+    $ stripe charges create  --amount=1672  --token=tok_abc123  --metadata=foo:bar meta:really\ meta\ data
 
 or
 
-    $ stripe charges create [--amount=AMOUNT][--customer=CUST_ID]
+    $ stripe charges create  --amount=100  --customer=cus_def456  --no-capture
 
 ### Interactive Menus
 
 Passing NO (or partial) arguments to any operation, will trigger an interactive menu
 
-    $ stripe charges create
+    $ stripe charge create
     Amount in dollars: __
 
 or
 
-    $ stripe charges create [--amount=AMOUNT]
+    $ stripe charge create  --amount=9900
     Name on Card: __
+
+or
+
+    $ stripe token create card --card=number:4242424242424242 name:Uther\ Pendragon cvc:911 exp-month:02
+    Expiration Year: __
 
 ### cursor-based pagination
 
-for all ```list``` operations
+for all `list` operations
 
     Options:
       [--starting-after=OBJECT_ID]  # The ID of the last object in the previous paged result set.
@@ -191,7 +196,7 @@ e.g. fetching a second page
 
 ### Exception Recovery
 
-Api errors are rescued and their messages displayed for you to read.  No more ```barfing``` to ```stdout```
+Api errors are rescued and their messages displayed for you to read.  No more `barfing` to `stdout`
 
 ![error rescue example](./error_message_display.png)
 

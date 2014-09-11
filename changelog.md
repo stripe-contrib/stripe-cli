@@ -1,0 +1,69 @@
+# Stripe-CLI Project Change Log
+
+## 1.6.1
+
+ - extensive option alias support throughout, with more on the way
+ - more extensive documentation in README, including subcommand descriptions. (still incomplete)
+ - add TOC in README
+
+## 1.6.0
+
+ - token creation correctly handles credit card params in any combination of individual options and --card=key:value pairs and still collects any missing params via interactive menu.
+ - any operation that accepts a credit card ID or token also accepts credit card parameters directly and incorporates the credit card interactive menu.
+ - improved option descriptions in all operations of all commands
+
+## 1.5.2
+
+ - tack **'/Stripe-CLI vX.X.X'** onto user-agent header of every api request
+   - **Disclaimer:** though I believe it to be completely harmless in this instance, this feature involves monkey-patching the `Stripe` module with an `alias_method_chain` style wrapper around `Stripe#request_headers`
+   - The Stripe Dashboard depends on the user-agent to distinguish the **source** of each api request
+   - this helps differentiate between requests made by application code and those made using the Stripe-CLI gem
+
+
+## 1.5.1
+
+ - fix unreported bug where Stripe::ListObjects were not displayed as simple arrays by awesome_print
+   - only present in conjunction with stripe-ruby version 1.14 and up
+   - due to a change in stripe-ruby by which `Stripe::StripeObject#to_hash` now calls itself recursivly
+   - resort to using `Object#instance_variable_get` to peek at a StripeObject's `@values` variable which already contains a hash of its attributes
+     - I am open to suggestions for a less brittle solution
+
+## 1.5.0
+
+ - Refunds as a top-level command
+
+## 1.4.6
+
+ - subscriptions `reactivate` subcommand
+ - `--at-period-end` flag added to `subscriptions cancel`
+ - `--refund-application-fee` flag added to `charges refund`
+ - add `--metadata` to the remaining subcommands that need it
+
+## 1.4.4
+
+ - `--receipt_email` and `--statement_description` options added to `charges create`
+
+## 1.4.3
+
+ - top-level `version` command for printing current gem version
+   - hidden from standard `help` banner
+   - aliased as `-v` and `--version`
+
+## 1.4.1
+
+ - per project config files (.stripecli)
+
+## 1.4.0
+
+ - credit cards as a top-level command
+   - for customers and recipients
+   - w/ actions: find, list, create, & delete
+
+## 1.3.0
+
+  - introduce multiple subscriptions per customer
+    - w/ actions: cancel, create, find, & list
+
+## 1.2.2
+
+  - introduce optional cursor-based pagination options to all `list` operations
