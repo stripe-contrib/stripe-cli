@@ -23,6 +23,13 @@ module Stripe
       }
     end
 
+    def convert_units amount
+      case units
+      when 'cents'
+        (Float(amount) * 100).to_i
+
+    end
+
     def retrieve_customer id
       begin
         ::Stripe::Customer.retrieve(id, api_key)

@@ -24,6 +24,10 @@ module Stripe
         @env ||= options.delete(:env) || config['default']
       end
 
+      def dollar_amounts
+        unless options.delete(:dollar_amounts) || stored_api_option('dollar_amounts')
+      end
+
       def stored_api_option option
         if File.exists?(config_file)
           if environment

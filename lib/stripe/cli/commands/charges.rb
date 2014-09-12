@@ -53,7 +53,7 @@ module Stripe
         option :receipt_email, :desc => "Email address to send receipt to. Overrides default email settings."
         def create
           options[:amount] ||= ask('Amount in dollars:')
-          options[:amount] = (Float(options[:amount]) * 100).to_i
+          options[:amount] =
 
           options[:card] ||= credit_card( options ) unless options[:customer]
 
