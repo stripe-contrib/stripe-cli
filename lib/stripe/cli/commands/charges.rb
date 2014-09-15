@@ -25,7 +25,7 @@ module Stripe
         option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         option :refund_application_fee, :type => :boolean, :default => false, :desc => "Whether or not to refund the application fee"
         def refund charge_id
-          options[:amount] = (Float(options[:amount]) * 100).to_i if options[:amount]
+          options[:amount] = convert_amount(options[:amount]) if options[:amount]
           if charge = retrieve_charge(charge_id)
             request charge.refunds, :create, options
           end
@@ -52,8 +52,7 @@ module Stripe
         option :statement_description, :desc => "Displayed alongside your company name on your customer's card statement (15 character max)"
         option :receipt_email, :desc => "Email address to send receipt to. Overrides default email settings."
         def create
-          options[:amount] ||= ask('Amount in dollars:')
-          options[:amount] =
+          options[:amount] = convert_amount(options[:amount])
 
           options[:card] ||= credit_card( options ) unless options[:customer]
 

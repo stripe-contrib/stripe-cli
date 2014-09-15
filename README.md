@@ -57,6 +57,31 @@ or, if you'd rather:
 
 If you choose to go this route, make sure to add `.stripecli` to your `.gitignore` files.
 
+### Dollars vs. Cents
+
+By default stripe-cli expects currency amounts to be specified in **dollars**. This behavior maybe unexpected to veteran Stripe users since the raw API expects **cents**
+
+To change the expected currency units from **dollars** to **cents**, set the config option `dollar_amounts` to `false` in your `.stripecli` file
+
+    dollar_amounts = false
+
+or
+
+    [test]
+      dollar_amounts = false
+
+If not set, this option defaults to **true** meaning that `amounts` should be provided as **dollar amounts**
+
+If you need to adjust this setting temporarily, there are global flags which maybe passed to any command
+
+    $ stripe charge create --no-dollar-amounts
+    Amount In Cents: __
+
+    $ stripe charge create --dollar-amounts
+    Amount In Dollars: __
+
+
+
 ## General Features & Flexibility
 
 Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands, including metadata.
@@ -76,7 +101,7 @@ or
 Passing NO (or partial) arguments to any operation, will trigger an interactive menu
 
     $ stripe charge create
-    Amount in dollars: __
+    Amount In Dollars: __
 
 or
 

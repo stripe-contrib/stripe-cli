@@ -23,11 +23,12 @@ module Stripe
       }
     end
 
-    def convert_units amount
-      case units
-      when 'cents'
-        (Float(amount) * 100).to_i
-
+    def convert_amount amount
+      if dollar_amounts
+        (Float(amount||ask('Amount In Dollars:')) * 100).to_i
+      else
+        amount||ask('Amount In Cents:')
+      end
     end
 
     def retrieve_customer id

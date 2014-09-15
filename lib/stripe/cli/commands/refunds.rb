@@ -31,7 +31,7 @@ module Stripe
         option :refund_application_fee, :type => :boolean, :default => false, :desc => "Whether or not to refund the application fee"
         option :charge, :aliases => :c, :required => true, :desc => "Id of charge to apply refund"
         def create
-          options[:amount] = (Float(options[:amount]) * 100).to_i if options[:amount]
+          options[:amount] = convert_amount(options[:amount]) if options[:amount]
           if charge = retrieve_charge(options.delete :charge)
             super charge.refunds, options
           end

@@ -2,6 +2,7 @@ module Stripe
   module CLI
     module Commands
       class Plans < Command
+        include Stripe::Utils
 
         desc "list", "List plans"
         option :starting_after, :desc => "The ID of the last object in the previous paged result set. For cursor-based pagination."
@@ -33,8 +34,7 @@ module Stripe
         option :trial_period_days, :type => :numeric, :default => 0, :desc => "Number of days to delay a customer's initial bill"
         option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         def create
-          options[:amount] ||= ask('Amount in dollars:')
-          options[:amount]   = (Float(options[:amount]) * 100).to_i
+          options[:amount]   = convert_amount(options[:amount])
           options[:name]   ||= ask('Plan name:')
           options[:id]     ||= ask('Plan id:')
 

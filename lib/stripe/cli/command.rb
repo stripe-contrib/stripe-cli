@@ -9,6 +9,7 @@ module Stripe
       class_option :key, :aliases => :k
       class_option :env, :aliases => :e
       class_option :version, :aliases => :v
+      class_option :dollar_amounts, :type => :boolean
 
       protected
 
@@ -25,7 +26,10 @@ module Stripe
       end
 
       def dollar_amounts
-        unless options.delete(:dollar_amounts) || stored_api_option('dollar_amounts')
+        convert_amount_to_dollars = options.delete(:dollar_amounts)
+        convert_amount_to_dollars.nil? ?
+        stored_api_option('dollar_amounts') == 'false' ?
+        false : true : convert_amount_to_dollars
       end
 
       def stored_api_option option

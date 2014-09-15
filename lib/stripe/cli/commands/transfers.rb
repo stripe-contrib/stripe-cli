@@ -2,6 +2,7 @@ module Stripe
   module CLI
     module Commands
       class Transfers < Command
+        include Stripe::Utils
 
         desc "list", "List transfers, optionaly filter by recipient or transfer status: ( pending paid failed )"
         option :starting_after, :desc => "The ID of the last object in the previous paged result set. For cursor-based pagination."
@@ -33,8 +34,7 @@ module Stripe
           if options.delete(:balance) == true
             options[:amount] = Stripe::Balance.retrieve(api_key).available.first.amount
           else
-            options[:amount] ||= ask('Amount in Dollars:')
-            options[:amount] = (Float(options[:amount]) * 100).to_i
+            options[:amount] = convert_amount(options[:amount])
           end
 
           if options.delete(:self) == true

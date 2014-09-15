@@ -1,5 +1,11 @@
 # Stripe-CLI Project Change Log
 
+## 1.6.3
+
+ - new `dollar_amounts` config setting for toggling expected currency units between **dollars** and **cents**
+ - `--no-dollar-amounts` global option flag
+ - `--dollar-amounts` global option flag
+
 ## 1.6.1
 
  - extensive option alias support throughout, with more on the way
