@@ -1,0 +1,14 @@
+default = test
+version = "2014-07-22"
+dollar_amounts = false
+
+[test]
+  key = sk_test_abc123def456ghi789jklmno
+
+[live]
+  key = sk_live_onmlkj987ihg654fed321cba
+
+[new-api]
+  key = sk_test_abc123def456ghi789jklmno
+  version = "2014-09-08"
+  dollar_amounts = true

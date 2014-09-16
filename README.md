@@ -28,15 +28,19 @@ To use a specific api version, pass in the `-v` or `--version` option
 
     $ stripe balance_transactions list -v "2014-08-04"
 
-You may also store default configurations in a `~/.stripecli` file that conforms to the following example
+Explicitly passing in configuration every time is tedious. Avoid it by creating a configuration file that contains this data.
+
+Stripe-CLI will check your home folder (**~/**) for the existance of a `.stripecli` file that conforms to the following example
 
 ![example config file](./example.png)
 
-If this file exists, the specified default key is picked up and used automatically.
+If this file exists, the specified default configuration is picked up and used automatically.
 
 The current directory is now also checked for the existance of a `.stripecli` file. In which case, that file is used instead.
 
-You may also overide the default environment setting in your config file by passing in the `-e` or `--env` option
+As shown in the above example, you may set multiple configuration **environments** in a single file. Just make sure to specify a default.
+
+The default **environment** may be overridden by passing in the `-e` or `--env` option to any command
 
     $ stripe customers find cust_123 --env=live
 
@@ -59,7 +63,7 @@ If you choose to go this route, make sure to add `.stripecli` to your `.gitignor
 
 ### Dollars vs. Cents
 
-By default stripe-cli expects currency amounts to be specified in **dollars**. This behavior maybe unexpected to veteran Stripe users since the raw API expects **cents**
+By default stripe-cli expects currency amounts to be specified in **dollars**. This behavior maybe unexpected to veteran Stripe users since the raw API expects **cents**.
 
 To change the expected currency units from **dollars** to **cents**, set the config option `dollar_amounts` to `false` in your `.stripecli` file
 
@@ -70,7 +74,7 @@ or
     [test]
       dollar_amounts = false
 
-If not set, this option defaults to **true** meaning that `amounts` should be provided as **dollar amounts**
+If not set, this option defaults to **true** meaning that `amounts` should be in **dollars**
 
 If you need to adjust this setting temporarily, there are global flags which maybe passed to any command
 
@@ -153,7 +157,6 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe tokens          # find & create tokens for bank accounts & credit cards
       stripe transactions    # find & list balance transactions
       stripe transfers       # find, list, & create transfers
-
 
 ## Command Documentation
 
