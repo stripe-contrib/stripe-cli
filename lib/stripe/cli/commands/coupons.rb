@@ -28,7 +28,7 @@ module Stripe
         option :id
         option :percent_off, :type => :numeric
         option :amount_off, :type => :numeric
-        option :duration, :enum => [ :forever, :once, :repeating ]
+        option :duration, :enum => %w( forever once repeating )
         option :redeem_by, :desc => "coupon will no longer be accepted after this date."
         option :max_redemptions, :type => :numeric
         option :duration_in_months
