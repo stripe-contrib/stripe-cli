@@ -9,7 +9,7 @@ module Stripe
       class_option :key, :aliases => :k, :desc => "One of your API secret keys, provided by Stripe"
       class_option :env, :aliases => :e, :desc => "This param expects a ~/.stripecli file with section headers for any string passed into it"
       class_option :version, :aliases => :v, :desc => "Stripe API version-date. Looks like `YYYY-MM-DD`"
-      class_option :dollar_amounts, :type => :boolean, :default => true, :desc => "set expected currency units to dollars or cents"
+      class_option :dollar_amounts, :type => :boolean, :desc => "set expected currency units to dollars or cents"
 
       protected
 
@@ -26,8 +26,8 @@ module Stripe
       end
 
       def dollar_amounts
-        stored_api_option('dollar_amounts') == 'false' ?
-        false : options.delete(:dollar_amounts)
+        param_option = options.delete(:dollar_amounts)
+        param_option.nil? ? stored_api_option('dollar_amounts') == 'false' ? false : true : param_option
       end
 
       def stored_api_option option
