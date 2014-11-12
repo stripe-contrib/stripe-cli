@@ -22,13 +22,13 @@ module Stripe
         end
 
         desc "create", "create a new outgoing money transfer"
-        option :amount
-        option :recipient
+        option :amount, :desc => "transfer amount in dollars (or cents when --no-dollar-amounts)"
+        option :recipient, :desc => "ID of transfer recipient. May also be created interactively."
         option :currency, :default => 'usd'
-        option :description
-        option :statement_descriptor
-        option :balance, :type => :boolean
-        option :self, :type => :boolean
+        option :description, :desc => "Arbitrary description of transfer"
+        option :statement_description, :desc => "Displayed alongside your company name on your customer's card statement (15 character max)"
+        option :balance, :type => :boolean, :desc => "Sugar for specifying that amount should be equal to current balance"
+        option :self, :type => :boolean, :desc => "Sugar for specifying a transfer into your own account"
         option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         def create
           if options.delete(:balance) == true

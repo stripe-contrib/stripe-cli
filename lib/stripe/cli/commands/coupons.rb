@@ -25,14 +25,14 @@ module Stripe
         end
 
         desc "create", "Create a new Coupon"
-        option :id
-        option :percent_off, :type => :numeric
-        option :amount_off, :type => :numeric
-        option :duration, :enum => %w( forever once repeating )
+        option :id, :desc => "Unique name to identify this coupon"
+        option :percent_off, :type => :numeric, :desc => "a discount of this percentage of the total amount due"
+        option :amount_off, :type => :numeric, :desc => "a discount of this amount. Regardless of the total due"
+        option :duration, :enum => %w( forever once repeating ), :desc => "describes how long to apply the discount"
         option :redeem_by, :desc => "coupon will no longer be accepted after this date."
-        option :max_redemptions, :type => :numeric
-        option :duration_in_months
-        option :currency, :default => 'usd'
+        option :max_redemptions, :type => :numeric, :desc => "The maximum number of times this coupon may be redeemed"
+        option :duration_in_months, :desc => "number of months to apply the discount. *Only if `duration` is `repeating`*"
+        option :currency, :default => 'usd', :desc => "3-letter ISO code for currency"
         option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         def create
           unless options[:percent_off] || options[:amount_off]

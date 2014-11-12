@@ -13,6 +13,10 @@ module Stripe
       def api_key
         "stripe-key"
       end
+
+      def config
+        Hash.new
+      end
     end
   end
 end

@@ -10,7 +10,7 @@ module Stripe
         option :limit, :desc => "a limit on the number of resources returned, between 1 and 100"
         option :offset, :desc => "the starting index to be used, relative to the entire list"
         option :count, :desc => "depricated: use limit"
-        option :customer, :desc => "a customer ID to filter results by"
+        option :customer, :desc => "ID of customer who's charges we want to list"
         def list
           super Stripe::Charge, options
         end
@@ -21,7 +21,7 @@ module Stripe
         end
 
         desc "refund ID", "Refund a charge"
-        option :amount, :type => :numeric, :desc => "Refund amount in dollars. (Entire charge by default)"
+        option :amount, :type => :numeric, :desc => "Refund amount in dollars. (or cents when --no-dollar-amounts) defaults to entire charge"
         option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         option :refund_application_fee, :type => :boolean, :default => false, :desc => "Whether or not to refund the application fee"
         def refund charge_id
@@ -44,7 +44,7 @@ module Stripe
         option :card_exp_year, :aliases => "--exp-year", :desc => "Four digit expiration year of card"
         option :card_cvc, :aliases => "--cvc", :desc => "Three or four digit security code located on the back of card"
         option :card_name, :aliases => "--name", :desc => "Cardholder's full name as displayed on card"
-        option :amount, :type => :numeric, :desc => "Charge amount in dollars"
+        option :amount, :type => :numeric, :desc => "Charge amount in dollars (or cents when --no-dollar-amounts)"
         option :currency, :default => "usd", :desc => "3-letter ISO code for currency"
         option :description, :desc => "Arbitrary description of charge"
         option :capture, :type => :boolean, :default => true, :desc => "Whether or not to immediately capture the charge. Uncaptured charges expire in 7 days"

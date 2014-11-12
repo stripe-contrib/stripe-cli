@@ -1,5 +1,14 @@
 # Stripe-CLI Project Change Log
 
+## 1.6.4 - 2014-08-09
+
+ - better descriptions for ALL operations
+ - Bug fix
+ - update `transfers` command options
+   - `--statement-description`
+   - `--bank-account`
+   - `--card`
+
 ## 1.6.3
 
  - new `dollar_amounts` config setting for toggling expected currency units between **dollars** and **cents**

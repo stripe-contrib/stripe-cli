@@ -10,7 +10,7 @@ module Stripe
         option :limit, :desc => "a limit on the number of resources returned, between 1 and 100"
         option :offset, :desc => "the starting index to be used, relative to the entire list"
         option :count, :desc => "depricated: use limit"
-        option :charge, :aliases => :c, :required => true, :desc => "Id of charge to search within"
+        option :charge, :aliases => :c, :required => true, :desc => "Id of charge who's refunds we want to list"
         def list
           if charge = retrieve_charge(options.delete :charge)
             super charge.refunds, options
@@ -18,7 +18,7 @@ module Stripe
         end
 
         desc "find ID", "Find ID refund of CHARGE charge"
-        option :charge, :aliases => :c, :required => true, :desc => "Id of charge to search"
+        option :charge, :aliases => :c, :required => true, :desc => "Id of charge who's refund we want to find"
         def find refund_id
           if charge = retrieve_charge(options.delete :charge)
             super charge.refunds, refund_id
@@ -26,7 +26,7 @@ module Stripe
         end
 
         desc "create", "apply a new refund to CHARGE charge"
-        option :amount, :type => :numeric, :desc => "Refund amount in dollars. (Entire charge by default)"
+        option :amount, :type => :numeric, :desc => "Refund amount in dollars. (or cents when --no-dollar-amounts) defaults to entire charged amount"
         option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         option :refund_application_fee, :type => :boolean, :default => false, :desc => "Whether or not to refund the application fee"
         option :charge, :aliases => :c, :required => true, :desc => "Id of charge to apply refund"

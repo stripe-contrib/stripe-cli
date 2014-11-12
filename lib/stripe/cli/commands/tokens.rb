@@ -17,9 +17,9 @@ module Stripe
         option :card_cvc, :aliases => "--cvc", :desc => "Three or four digit security code located on the back of card"
         option :card_name, :aliases => "--name", :desc => "Cardholder's full name as displayed on card"
         option :bank_account, :aliases => "--account", :type => :hash, :default => {}, :desc => "hash of account params. may also be provided individually or added interactively."
-        option :country
-        option :routing_number
-        option :account_number
+        option :country, :desc => "country of bank account. currently supports 'US' only"
+        option :routing_number, :desc => "ACH routing number for bank account"
+        option :account_number, :desc => "account number of bank account. Must be a checking account"
         def create type
           case type
           when 'card', 'credit_card', 'credit card'

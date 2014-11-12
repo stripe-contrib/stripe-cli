@@ -10,7 +10,7 @@ module Stripe
         option :limit, :desc => "a limit on the number of resources returned, between 1 and 100"
         option :offset, :desc => "the starting index to be used, relative to the entire list"
         option :count, :desc => "depricated: use limit"
-        option :verified => :boolean
+        option :verified, :type => :boolean, :desc => "Only return recipients that are verified or unverified"
         def list
           super Stripe::Recipient, options
         end
@@ -30,13 +30,13 @@ module Stripe
         option :type, :enum => %w( individual corporation ), :desc => "recipient type,"
         option :individual, :type => :boolean, :aliases => :i, :desc => "flag specifying recipient should be of type Individual"
         option :corporation, :type => :boolean, :aliases => :c, :desc => "flag specifying recipient should be of type Corporation"
-        option :tax_id, :type => :numeric
-        option :email
-        option :description
-        option :bank_account, :aliases => "--account"
-        option :country
-        option :account_number
-        option :routing_number
+        option :tax_id, :type => :numeric, :desc => "Full SSN for individuals or full EIN for corporations"
+        option :email, :desc => "Recipient's email address"
+        option :description, :desc => "Arbitrary description of recipient"
+        option :bank_account, :aliases => "--account", :desc => "dictionary of bank account attributes as 'key':'value' pairs"
+        option :country, :desc => "country of bank account. currently supports 'US' only"
+        option :account_number, :desc => "account number of bank account. Must be a checking account"
+        option :routing_number, :desc => "ACH routing number for bank account"
         option :card, :aliases => "--token", :desc => "credit card Token or ID. May also be created interactively."
         option :card_number, :aliases => "--number", :desc => "credit card number. usually 16 digits long"
         option :card_exp_month, :aliases => "--exp-month", :desc => "Two digit expiration month of card"

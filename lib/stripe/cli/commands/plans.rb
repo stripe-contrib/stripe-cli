@@ -27,10 +27,10 @@ module Stripe
         desc "create", "Create a new plan"
         option :name, :desc => "Name displayed on invoices and in the Dashboard"
         option :id, :desc => "Unique name used to identify this plan when subscribing a customer"
-        option :amount, :type => :numeric, :desc => "Amount in dollars"
+        option :amount, :type => :numeric, :desc => "Amount in dollars (or cents when --no-dollar-amounts)"
         option :interval, :enum => %w( day week month year ), :default => "month", :desc => "Billing frequency"
         option :interval_count, :type => :numeric, :default => 1, :desc => "The number of intervals between each subscription billing."
-        option :currency, :default => "usd"
+        option :currency, :default => "usd", :desc => "3-letter ISO code for currency"
         option :trial_period_days, :type => :numeric, :default => 0, :desc => "Number of days to delay a customer's initial bill"
         option :metadata, :type => :hash, :desc => "a key/value store of additional user-defined data"
         def create

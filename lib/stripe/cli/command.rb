@@ -6,10 +6,10 @@ module Stripe
       @@root_config = ::File.expand_path('~/.stripecli')
       @@local_config = ::File.expand_path('./.stripecli')
 
-      class_option :key, :aliases => :k
-      class_option :env, :aliases => :e
-      class_option :version, :aliases => :v
-      class_option :dollar_amounts, :type => :boolean
+      class_option :key, :aliases => :k, :desc => "One of your API secret keys, provided by Stripe"
+      class_option :env, :aliases => :e, :desc => "This param expects a ~/.stripecli file with section headers for any string passed into it"
+      class_option :version, :aliases => :v, :desc => "Stripe API version-date. Looks like `YYYY-MM-DD`"
+      class_option :dollar_amounts, :type => :boolean, :default => true, :desc => "set expected currency units to dollars or cents"
 
       protected
 
@@ -26,10 +26,8 @@ module Stripe
       end
 
       def dollar_amounts
-        convert_amount_to_dollars = options.delete(:dollar_amounts)
-        convert_amount_to_dollars.nil? ?
         stored_api_option('dollar_amounts') == 'false' ?
-        false : true : convert_amount_to_dollars
+        false : options.delete(:dollar_amounts)
       end
 
       def stored_api_option option
@@ -75,12 +73,6 @@ module Stripe
         end
       end
 
-    private
-
-      def output objects
-        ap inspect( objects ), :indent => -2
-      end
-
       def inspect object
         case object
         when Array
@@ -96,6 +88,13 @@ module Stripe
         else
           object
         end
+      end
+      public :inspect
+
+    private
+
+      def output objects
+        ap inspect( objects ), :indent => -2
       end
 
       def handle_hash object

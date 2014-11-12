@@ -11,7 +11,7 @@ module Stripe
         option :limit, :desc => "a limit on the number of resources returned, between 1 and 100"
         option :offset, :desc => "the starting index to be used, relative to the entire list"
         option :count, :desc => "depricated: use limit"
-        option :customer, :aliases => :c, :required => true, :desc => "ID of customer to search within"
+        option :customer, :aliases => :c, :required => true, :desc => "ID of customer who's subscriptions we want to list"
         def list
           if cust = retrieve_customer(options.delete :customer)
             super cust.subscriptions, options
@@ -19,7 +19,7 @@ module Stripe
         end
 
         desc "find ID", "find ID subscription for CUSTOMER customer"
-        option :customer, :aliases => :c, :required => true, :desc => "ID of customer to search within"
+        option :customer, :aliases => :c, :required => true, :desc => "ID of customer who's subscription we want to find"
         def find subscription_id
           if cust = retrieve_customer(options.delete :customer)
             super cust.subscriptions, subscription_id
@@ -53,7 +53,7 @@ module Stripe
 
         desc "cancel ID", "cancel ID subscription for CUSTOMER customer"
         option :at_period_end, :type => :boolean, :default =>  false, :desc => "delay cancellation until end of current period"
-        option :customer, :aliases => :c, :required => true, :desc => "id of customer to search within"
+        option :customer, :aliases => :c, :required => true, :desc => "ID of customer who's subscription we want to cancel"
         def cancel subscription_id
           options[:at_period_end] ||= yes?("delay until end of current period? [yN]",:yellow)
           if cust = retrieve_customer(options.delete :customer) and
@@ -63,7 +63,7 @@ module Stripe
         end
 
         desc "reactivate ID", "reactivate auto-renewal if `cancel-at-period-end` was set to true"
-        option :customer, :aliases => :c, :required => true, :desc => "id of customer to search within"
+        option :customer, :aliases => :c, :required => true, :desc => "ID of customer who's subscription we want to reactivate"
         def reactivate subscription_id
           if cust = retrieve_customer(options.delete :customer) and
             subscription = retrieve_subscription(cust, subscription_id)
