@@ -12,6 +12,7 @@ module Stripe
       class_option :dates, :aliases => :d, :type => :string, :desc => "Date Style. It should be either local, utc, or unix. Defaults to local.", :enum => %w(local utc unix)
       class_option :dollar_amounts, :type => :boolean, :desc => "set expected currency units to dollars or cents"
       class_option :strip_nils, :type => :boolean, :desc => "use this flag to strip nil valued attributes from the output"
+      class_option :expand, :type => :array, :desc => "one or more ID properties of the response you'd like expanded into full objects"
 
 
       protected
@@ -63,7 +64,7 @@ module Stripe
       end
 
       def find klass, id
-        request klass, :retrieve, id
+        request klass, :retrieve, {:id => id, :expand => options[:expand]}
       end
 
       def delete klass, id
