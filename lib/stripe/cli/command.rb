@@ -9,7 +9,7 @@ module Stripe
       class_option :key, :aliases => :k, :type => :string, :desc => "One of your API secret keys, provided by Stripe"
       class_option :env, :aliases => :e, :type => :string, :desc => "This param expects a ~/.stripecli file with section headers for any string passed into it"
       class_option :version, :aliases => :v, :type => :string, :desc => "Stripe API version-date. Looks like `YYYY-MM-DD`"
-      class_option :dates, :aliases => :d, :type => :string, :desc => "Date Style. It should be either local, utc, or unix. Defaults to local.", :enum => %w(local utc unix), :default => "local"
+      class_option :dates, :aliases => :d, :type => :string, :desc => "Date Style. It should be either local, utc, or unix. Defaults to local.", :enum => %w(local utc unix)
       class_option :dollar_amounts, :type => :boolean, :desc => "set expected currency units to dollars or cents"
 
 
