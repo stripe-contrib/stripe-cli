@@ -12,8 +12,6 @@ Uses [AwesomePrint](https://github.com/michaeldv/awesome_print) to provide very 
 
 ![example output](./output.png)
 
-Note that Date/Time stamps are converted automatically.  No more Epoch/Unix timestamp garbage!
-
 ## Installation
 
     $ gem install stripe-cli
@@ -60,6 +58,12 @@ or, if you'd rather:
       key = sk_live_ghijkl789101
 
 If you choose to go this route, make sure to add `.stripecli` to your `.gitignore` files.
+
+### Date/Time
+
+By default, Date/Time stamps are converted automatically to your local machine time. No more Epoch/Unix timestamp garbage!
+
+If you'd prefer to have time Date/Time stamps to be converted to UTC time, set the config option `dates` or `-d` to `utc`. You can also set it to `unix` to see the original Unix timestamp passed from the API. By default, it uses `local`.
 
 ### Dollars vs. Cents
 
