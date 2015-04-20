@@ -9,6 +9,7 @@ module Stripe
       autoload :Coupons, 'stripe/cli/commands/coupons'
       autoload :Events, 'stripe/cli/commands/events'
       autoload :Invoices, 'stripe/cli/commands/invoices'
+      autoload :InvoiceItems, 'stripe/cli/commands/invoice_items'
       autoload :Transactions, 'stripe/cli/commands/transactions'
       autoload :Balance, 'stripe/cli/commands/balance'
       autoload :Recipients, 'stripe/cli/commands/recipients'
