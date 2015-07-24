@@ -1,6 +1,15 @@
 # Stripe-CLI Project Change Log
 
-## 1.6.4 - 2014-08-09
+## 1.8.0
+
+ - top-level `invoice_items` command
+   - w/ actions: `find`, `list`, `create`, & `delete`
+
+## 1.7.0
+
+- new `dates` config option for specifying how dates should be displayed (`utc`, `unix`, or `local`)
+
+## 1.6.4
 
  - better descriptions for ALL operations
  - Bug fix
