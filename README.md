@@ -147,21 +147,22 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
 
 
     Commands:
-      stripe balance           # show currently available & pending balance amounts
-      stripe cards             # find, list, create, & delete cards for both customers & recipients
-      stripe charges           # find, list, create, capture, & refund charges
-      stripe coupons           # find, list, create, & delete coupons
-      stripe customers         # find, list, create, & delete customers
-      stripe events            # find & list events
-      stripe help [COMMAND]    # Describe available commands or one specific command
-      stripe invoices          # find, list, pay, & close invoices
-      stripe plans             # find, list, create, & delete plans
-      stripe recipients        # find, list, create, & delete recipients
-      stripe refunds           # find, list, & create refunds
-      stripe subscriptions     # find, list, create, cancel, & reactivate multiple subscriptions per customer
-      stripe tokens            # find & create tokens for bank accounts & credit cards
-      stripe transactions      # find & list balance transactions
-      stripe transfers         # find, list, & create transfers
+      stripe balance         # show currently available & pending balance amounts
+      stripe cards           # find, list, create, & delete cards for both customers & recipients
+      stripe charges         # find, list, create, capture, & refund charges
+      stripe coupons         # find, list, create, & delete coupons
+      stripe customers       # find, list, create, & delete customers
+      stripe events          # find & list events
+      stripe help [COMMAND]  # Describe available commands or one specific command
+      stripe invoice_items   # find, list, create, & delete invoice items
+      stripe invoices        # find, list, pay, & close invoices
+      stripe plans           # find, list, create, & delete plans
+      stripe recipients      # find, list, create, & delete recipients
+      stripe refunds         # find, list, & create refunds
+      stripe subscriptions   # find, list, create, cancel & reactivate multiple subscriptions per customer
+      stripe tokens          # find & create tokens for bank accounts & credit cards
+      stripe transactions    # find & list balance transactions
+      stripe transfers       # find, list, & create transfers
 
 
     Global Options:
@@ -204,6 +205,11 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
     - [List](#invoices-list)
     - [Pay](#invoice-pay)
     - [Upcoming](#invoice-upcoming)
+- [Invoice Items](#invoice-items)
+    - [Find](#invoice-items-find)
+    - [List](#invoice-items-list)
+    - [Create](#invoice-items-create)
+    - [Delete](#invoice-items-delete)
 - [Plans](#plans)
     - [Create](#plan-create)
     - [Delete](#plan-delete)
@@ -296,7 +302,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]    # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                    # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                  # the starting index to be used, relative to the entire list
-          [--count=COUNT]                    # depricated: use limit
+          [--count=COUNT]                    # deprecated: use limit
           [--customer=CUSTOMER]              # ID of customer who's charges we want to list
 
     List charges (optionally by customer_id)
@@ -401,7 +407,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]    # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                    # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                  # the starting index to be used, relative to the entire list
-          [--count=COUNT]                    # depricated: use limit
+          [--count=COUNT]                    # deprecated: use limit
           --owner=OWNER                      # id of customer or recipient to search within
 
     List cards for OWNER (customer or recipient)
@@ -462,7 +468,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]    # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                    # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                  # the starting index to be used, relative to the entire list
-          [--count=COUNT]                    # depricated: use limit
+          [--count=COUNT]                    # deprecated: use limit
 
     List customers
 
@@ -528,7 +534,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]     # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                     # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                   # the starting index to be used, relative to the entire list
-          [--count=COUNT]                     # depricated: use limit
+          [--count=COUNT]                     # deprecated: use limit
           -c, --customer=CUSTOMER             # ID of customer who's subscriptions we want to list
 
     List subscriptions for CUSTOMER customer
@@ -577,7 +583,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]    # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                    # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                  # the starting index to be used, relative to the entire list
-          [--count=COUNT]                    # depricated: use limit
+          [--count=COUNT]                    # deprecated: use limit
           [--customer=CUSTOMER]              # a customer ID to filter results by
 
     List invoices (optionally by customer_id)
@@ -595,6 +601,63 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       stripe invoice upcoming CUSTOMER
 
     find the upcoming invoice for CUSTOMER
+
+### Invoice Items
+
+    Commands:
+      stripe invoice_items create          # Create a new invoice item for customer
+      stripe invoice_items delete ID       # Delete a invoice item
+      stripe invoice_items find ID         # Find an invoice item
+      stripe invoice_items help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe invoice_items list            # List invoice items (optionally by customer_id)
+
+
+#### Invoice Item Create
+
+    Usage:
+      stripe create
+
+    Options:
+          [--customer=CUSTOMER]                      # The ID of customer for the invoice item
+          [--amount=N]                               # Amount in dollars (or cents when --no-dollar-amounts)
+          [--currency=CURRENCY]                      # 3-letter ISO code for currency
+                                                     # Default: usd
+          [--description=DESCRIPTION]                # Arbitrary description of charge
+          [--invoice=INVOICE]                        # The ID of an existing invoice to add this invoice item to
+          [--subscription=SUBSCRIPTION]              # The ID of a subscription to add this invoice item to
+          [--discountable], [--no-discountable]      # Controls whether discounts apply to this invoice item
+          [--metadata=key:value]                     # A key/value store of additional user-defined data
+
+    Create a new invoice item for customer
+
+#### Invoice Item Delete
+
+    Usage:
+      stripe delete ID
+
+    Delete a invoice item
+
+#### Invoice Item Find
+
+    Usage:
+      stripe find ID
+
+    Find an invoice item
+
+#### Invoice Item List
+
+    Usage:
+      stripe list
+
+    Options:
+          [--starting-after=STARTING_AFTER]          # The ID of the last object in the previous paged result set. For cursor-based pagination.
+          [--ending-before=ENDING_BEFORE]            # The ID of the first object in the previous paged result set, when paging backwards through the list.
+          [--limit=LIMIT]                            # a limit on the number of resources returned, between 1 and 100
+          [--offset=OFFSET]                          # the starting index to be used, relative to the entire list
+          [--count=COUNT]                            # deprecated: use limit
+          [--customer=CUSTOMER]                      # ID of customer who's invoice items we want to list
+
+    List invoice items (optionally by customer_id)
 
 ### Plans
 
@@ -653,7 +716,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]            # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                            # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                          # the starting index to be used, relative to the entire list
-          [--count=COUNT]                            # depricated: use limit
+          [--count=COUNT]                            # deprecated: use limit
 
     List plans
 
@@ -710,7 +773,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]     # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                     # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                   # the starting index to be used, relative to the entire list
-          [--count=COUNT]                     # depricated: use limit
+          [--count=COUNT]                     # deprecated: use limit
 
     List coupons
 
@@ -738,7 +801,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]     # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                     # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                   # the starting index to be used, relative to the entire list
-          [--count=COUNT]                     # depricated: use limit
+          [--count=COUNT]                     # deprecated: use limit
           [--object-id=OBJECT_ID]             # only list events pertaining to the object with this ID
           [--type=TYPE]                       # only list events of type TYPE
 
@@ -768,7 +831,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]     # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                     # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                   # the starting index to be used, relative to the entire list
-          [--count=COUNT]                     # depricated: use limit
+          [--count=COUNT]                     # deprecated: use limit
           [--type=TYPE]                       # Possible values: charge, refund, adjustment, application_fee,
           [--source=SOURCE]                   # ...application_fee_refund, transfer, transfer_failure, or all(by default)
 
@@ -834,7 +897,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
           [--ending-before=ENDING_BEFORE]       # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                       # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                     # the starting index to be used, relative to the entire list
-          [--count=COUNT]                       # depricated: use limit
+          [--count=COUNT]                       # deprecated: use limit
           [--verified], [--no-verified]         # Only return recipients that are verified or unverified
 
     List recipients
@@ -883,7 +946,7 @@ Though `refund`  is still a supported operation of the `charges` command. The `r
           [--ending-before=ENDING_BEFORE]       # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                       # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                     # the starting index to be used, relative to the entire list
-          [--count=COUNT]                       # depricated: use limit
+          [--count=COUNT]                       # deprecated: use limit
           -c, --charge=CHARGE                   # Id of charge to search within
 
     List refunds for CHARGE charge
@@ -930,7 +993,7 @@ Though `refund`  is still a supported operation of the `charges` command. The `r
           [--ending-before=ENDING_BEFORE]            # The ID of the first object in the previous paged result set, when paging backwards through the list.
           [--limit=LIMIT]                            # a limit on the number of resources returned, between 1 and 100
           [--offset=OFFSET]                          # the starting index to be used, relative to the entire list
-          [--count=COUNT]                            # depricated: use limit
+          [--count=COUNT]                            # deprecated: use limit
           [--recipient=RECIPIENT]                    # limit result set to RECIPIENT's transfers
           [--status=STATUS]                          # filter by transfer status. Possible values: pending, paid, failed
 

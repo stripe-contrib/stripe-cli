@@ -11,6 +11,7 @@ module Stripe
       register Commands::Coupons, 'coupons', 'coupons', 'find, list, create, & delete coupons'
       register Commands::Events, 'events', 'events', 'find & list events'
       register Commands::Invoices, 'invoices', 'invoices', 'find, list, pay, & close invoices'
+      register Commands::InvoiceItems, 'invoice_items', 'invoice_items', 'find, list, create, & delete invoice items'
       register Commands::Transactions, 'transactions', 'transactions', 'find & list balance transactions'
       register Commands::Balance, 'balance', 'balance', 'show currently available & pending balance amounts'
       register Commands::Recipients, 'recipients', 'recipients', 'find, list, create, & delete recipients'
