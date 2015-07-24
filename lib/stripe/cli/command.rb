@@ -11,6 +11,7 @@ module Stripe
       class_option :version, :aliases => :v, :type => :string, :desc => "Stripe API version-date. Looks like `YYYY-MM-DD`"
       class_option :dates, :aliases => :d, :type => :string, :desc => "Date Style. It should be either local, utc, or unix. Defaults to local.", :enum => %w(local utc unix)
       class_option :dollar_amounts, :type => :boolean, :desc => "set expected currency units to dollars or cents"
+      class_option :strip_nils, :type => :boolean, :desc => "use this flag to strip nil valued attributes from the output"
 
 
       protected
@@ -32,8 +33,11 @@ module Stripe
       end
 
       def dollar_amounts
-        param_option = options.delete(:dollar_amounts)
-        param_option.nil? ? stored_api_option('dollar_amounts') == 'false' ? false : true : param_option
+        options.delete(:dollar_amounts) { !(stored_api_option('dollar_amounts') == 'false') }
+      end
+
+      def strip_nils?
+        options.delete(:strip_nils) { stored_api_option('strip_nils') == "true" }
       end
 
       def stored_api_option option
@@ -71,6 +75,7 @@ module Stripe
       end
 
       def request object, method, *arguments
+        @strip_nils = strip_nils? # must call before the request to ensure command-line flag is not sent to Stripe
         Stripe.api_version = api_version unless api_version.nil?
         begin
           output object.send method, *arguments
@@ -105,7 +110,7 @@ module Stripe
 
       def handle_hash object
         object.inject({}) do |hash, (key, value)|
-          hash[key] = inspect( value )
+          hash[key] = inspect( value ) unless @strip_nils && value.nil?
           hash
         end
       end
