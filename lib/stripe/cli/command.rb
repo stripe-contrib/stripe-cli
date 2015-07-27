@@ -90,18 +90,7 @@ module Stripe
         when Stripe::StripeObject
           inspect object.instance_variable_get(:@values)
         when Numeric
-          if object > 1000000000
-            case dates
-            when 'unix' then
-              object
-            when 'utc'
-              Time.at( object ).utc
-            else
-              Time.at( object )
-            end
-          else
-            object
-          end
+          object > 1000000000 ? handle_date(object) : object
         else
           object
         end
@@ -118,6 +107,17 @@ module Stripe
         object.inject({}) do |hash, (key, value)|
           hash[key] = inspect( value )
           hash
+        end
+      end
+
+      def handle_date object
+        case dates
+        when 'unix' then
+          object
+        when 'utc'
+          Time.at( object ).utc
+        else
+          Time.at( object )
         end
       end
     end
