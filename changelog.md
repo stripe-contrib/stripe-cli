@@ -1,5 +1,12 @@
 # Stripe-CLI Project Change Log
 
+## 1.8.1
+
+ - new configuration option to strip nil-valued attributes from command-line output
+   - use on command-line with global flag `--strip-nils`
+   - or set in config-file with `strip_nils=true`
+   - override config-file setting with global command-line flag `--no-strip-nils`
+
 ## 1.8.0
 
  - top-level `invoice_items` command

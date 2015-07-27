@@ -171,6 +171,7 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       [-v | --version=VERSION] # Stripe API version-date. Looks like `YYYY-MM-DD`
       [--dollar-amounts]       # configuration flag setting expected currency units to dollars
       [--no-dollar-amounts]    # configuration flag setting expected currency units to cents
+      [--strip-nils]           # use this flag to strip nil-valued attributes from the output
 
 ## Command Documentation
 

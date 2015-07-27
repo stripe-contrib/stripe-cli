@@ -12,3 +12,4 @@ dollar_amounts = false
   key = sk_test_abc123def456ghi789jklmno
   version = "2014-09-08"
   dollar_amounts = true
+  strip_nils = true
