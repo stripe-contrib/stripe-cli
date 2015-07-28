@@ -1,5 +1,9 @@
 # Stripe-CLI Project Change Log
 
+## 1.8.2
+
+ - bug fixes: it was previously possible for certain command-line arguments to be passed through to the Stripe API resulting in API exceptions.
+
 ## 1.8.1
 
  - new configuration option to strip nil-valued attributes from command-line output
