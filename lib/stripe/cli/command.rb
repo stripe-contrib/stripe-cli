@@ -28,8 +28,8 @@ module Stripe
         @env ||= options.delete(:env) || config['default']
       end
 
-      def dates
-        @dates ||= options.delete(:dates) || stored_api_option('dates')
+      def date_format
+        options.delete(:dates) || stored_api_option('dates')
       end
 
       def dollar_amounts
@@ -59,11 +59,11 @@ module Stripe
       end
 
       def list klass, options
-        request klass, :all, options, api_key
+        request klass, :all, options
       end
 
       def find klass, id
-        request klass, :retrieve, id, api_key
+        request klass, :retrieve, id
       end
 
       def delete klass, id
@@ -71,12 +71,11 @@ module Stripe
       end
 
       def create klass, options
-        request klass, :create, options, api_key
+        request klass, :create, options
       end
 
       def request object, method, *arguments
-        @strip_nils = strip_nils? # must call before the request to ensure command-line flag is not sent to Stripe
-        Stripe.api_version = api_version unless api_version.nil?
+        pre_request_setup
         begin
           output object.send method, *arguments
         rescue StripeError => e
@@ -108,6 +107,15 @@ module Stripe
         ap inspect( objects ), :indent => -2
       end
 
+      # strip non-api params from options hash
+      # set api_version & api_key
+      def pre_request_setup
+        @strip_nils = strip_nils?
+        @date_format = date_format
+        Stripe.api_key = api_key
+        Stripe.api_version = api_version unless api_version.nil?
+      end
+
       def handle_hash object
         object.inject({}) do |hash, (key, value)|
           hash[key] = inspect( value ) unless @strip_nils && value.nil?
@@ -116,7 +124,7 @@ module Stripe
       end
 
       def handle_date object
-        case dates
+        case @date_format
         when 'unix' then
           object
         when 'utc'
