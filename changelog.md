@@ -1,5 +1,11 @@
 # Stripe-CLI Project Change Log
 
+## 1.8.3
+
+ - new command-line option `--expand` provides support for Stripe API expansions
+   - https://stripe.com/docs/api#expanding_objects
+   - stripe-ruby dependancy updated to version 1.X.X
+
 ## 1.8.2
 
  - bug fixes
