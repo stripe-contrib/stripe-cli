@@ -63,7 +63,7 @@ If you choose to go this route, make sure to add `.stripecli` to your `.gitignor
 
 By default, Date/Time stamps are converted automatically to your local machine time. No more Epoch/Unix timestamp garbage!
 
-If you'd prefer to have time Date/Time stamps to be converted to UTC time, set the config option `dates` or `-d` to `utc`. You can also set it to `unix` to see the original Unix timestamp passed from the API. By default, it uses `local`.
+If you'd prefer to have time Date/Time stamps converted to UTC time, set the config option `dates` or `-d` to `utc`. You can also set it to `unix` to see the original Unix timestamp passed from the API. By default, it uses `local`.
 
 ### Dollars vs. Cents
 
@@ -92,13 +92,13 @@ If you need to adjust this setting temporarily, there are global flags which may
 
 ## General Features & Flexibility
 
-Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands, including metadata.
+Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands, including metadata and the `expand` parameter.
 
     $ stripe charges create  --amount=9.98  --description=a\ must\ have  --number=4242424242424242  --cvc=123  --exp-month=10  --exp-year=2020
 
 or
 
-    $ stripe charges create  --amount=16.72  --token=tok_abc123  --metadata=foo:bar meta:really\ meta\ data
+    $ stripe charges create  --amount=16.72  --token=tok_abc123  --metadata=foo:bar meta:baz --expand=balance_transaction
 
 or
 
