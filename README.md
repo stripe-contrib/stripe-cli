@@ -63,7 +63,7 @@ If you choose to go this route, make sure to add `.stripecli` to your `.gitignor
 
 By default, Date/Time stamps are converted automatically to your local machine time. No more Epoch/Unix timestamp garbage!
 
-If you'd prefer to have time Date/Time stamps to be converted to UTC time, set the config option `dates` or `-d` to `utc`. You can also set it to `unix` to see the original Unix timestamp passed from the API. By default, it uses `local`.
+If you'd prefer to have time Date/Time stamps converted to UTC time, set the config option `dates` or `-d` to `utc`. You can also set it to `unix` to see the original Unix timestamp passed from the API. By default, it uses `local`.
 
 ### Dollars vs. Cents
 
@@ -92,13 +92,13 @@ If you need to adjust this setting temporarily, there are global flags which may
 
 ## General Features & Flexibility
 
-Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands, including metadata.
+Any parameters accepted by the [stripe api](https://stripe.com/docs/api) are acceptable options to pass into commands, including metadata and the `expand` parameter.
 
     $ stripe charges create  --amount=9.98  --description=a\ must\ have  --number=4242424242424242  --cvc=123  --exp-month=10  --exp-year=2020
 
 or
 
-    $ stripe charges create  --amount=16.72  --token=tok_abc123  --metadata=foo:bar meta:really\ meta\ data
+    $ stripe charges create  --amount=16.72  --token=tok_abc123  --metadata=foo:bar meta:baz --expand=balance_transaction
 
 or
 
@@ -169,9 +169,11 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
       [-k | --key=KEY]         # One of your API secret keys, provided by Stripe
       [-e | --env=ENV]         # expects a `~/.stripecli` file with section headers for any string passed into it
       [-v | --version=VERSION] # Stripe API version-date. Looks like `YYYY-MM-DD`
+      [-d | --dates=DATES]     # Date Style. It should be either local, utc, or unix. Defaults to local.
       [--dollar-amounts]       # configuration flag setting expected currency units to dollars
       [--no-dollar-amounts]    # configuration flag setting expected currency units to cents
       [--strip-nils]           # use this flag to strip nil-valued attributes from the output
+      [--expand=one two three] # one or more ID properties of the response you'd like expanded into full objects
 
 ## Command Documentation
 
@@ -606,17 +608,17 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
 ### Invoice Items
 
     Commands:
-      stripe invoice_items create          # Create a new invoice item for customer
-      stripe invoice_items delete ID       # Delete a invoice item
-      stripe invoice_items find ID         # Find an invoice item
-      stripe invoice_items help [COMMAND]  # Describe subcommands or one specific subcommand
-      stripe invoice_items list            # List invoice items (optionally by customer_id)
+      stripe invoice-items create          # Create a new invoice item for customer
+      stripe invoice-items delete ID       # Delete a invoice item
+      stripe invoice-items find ID         # Find an invoice item
+      stripe invoice-items help [COMMAND]  # Describe subcommands or one specific subcommand
+      stripe invoice-items list            # List invoice items (optionally by customer_id)
 
 
 #### Invoice Item Create
 
     Usage:
-      stripe create
+      stripe invoice-item create
 
     Options:
           [--customer=CUSTOMER]                      # The ID of customer for the invoice item
@@ -634,21 +636,21 @@ Api errors are rescued and their messages displayed for you to read.  No more `b
 #### Invoice Item Delete
 
     Usage:
-      stripe delete ID
+      stripe invoice-item delete ID
 
     Delete a invoice item
 
 #### Invoice Item Find
 
     Usage:
-      stripe find ID
+      stripe invoice-item find ID
 
     Find an invoice item
 
 #### Invoice Item List
 
     Usage:
-      stripe list
+      stripe invoice-items list
 
     Options:
           [--starting-after=STARTING_AFTER]          # The ID of the last object in the previous paged result set. For cursor-based pagination.
