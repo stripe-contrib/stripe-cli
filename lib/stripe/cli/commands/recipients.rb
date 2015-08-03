@@ -69,14 +69,7 @@ module Stripe
             options[:bank_account] = bank_account( options )
           end
 
-          options.delete :country
-          options.delete :account_number
-          options.delete :routing_number
-          options.delete :card_number
-          options.delete :card_exp_month
-          options.delete :card_exp_year
-          options.delete :card_cvc
-          options.delete :card_name
+          options.delete_if {|option,_| strip_list.include? option }
 
           super Stripe::Recipient, options
         end
@@ -88,6 +81,11 @@ module Stripe
           opt.delete(:corporation) ? 'corporation' :
           yes?('Corporation? [yN]') ? 'corporation' : 'individual'
         end
+
+        def strip_list
+          %i( card_number card_exp_month card_exp_year card_cvc card_name country routing_number account_number )
+        end
+
       end
     end
   end

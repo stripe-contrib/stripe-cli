@@ -2,7 +2,9 @@
 
 ## 1.8.2
 
- - bug fixes: it was previously possible for certain command-line arguments to be passed through to the Stripe API resulting in API exceptions.
+ - bug fixes
+   - it was previously possible for certain command-line arguments to be passed through to the Stripe API resulting in API exceptions.
+   - creating tokens would fail for bank account type
 
 ## 1.8.1
 

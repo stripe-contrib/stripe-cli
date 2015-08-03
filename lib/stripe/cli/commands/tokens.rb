@@ -21,18 +21,24 @@ module Stripe
         option :routing_number, :desc => "ACH routing number for bank account"
         option :account_number, :desc => "account number of bank account. Must be a checking account"
         def create type
-          case type
+          opt_symbol, value_hash = case type
           when 'card', 'credit_card', 'credit card'
-            credit_card = credit_card( options )
-            options = {}
-            options[:card] = credit_card
+            [ :card, credit_card( options ) ]
           when 'account', 'bank_account', 'bank account'
-            bank_account = bank_account( options )
-            options = {}
-            options[:bank_account] = bank_account
+            [ :bank_account, bank_account( options ) ]
           end
 
+          options.delete_if {|option,_| strip_list.include? option }
+
+          options[opt_symbol] = value_hash
+
           super Stripe::Token, options
+        end
+
+        private
+
+        def strip_list
+          %i( card card_number card_exp_month card_exp_year card_cvc card_name bank_account country routing_number account_number )
         end
 
       end
