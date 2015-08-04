@@ -6,7 +6,7 @@ module Stripe
 
         desc "find ID", "Find a Token"
         def find event_id
-          super Stripe::Event, event_id
+          super Stripe::Token, event_id
         end
 
         desc "create TYPE", "create a new token of type TYPE(card or account)"
