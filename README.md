@@ -88,6 +88,14 @@ If you need to adjust this setting temporarily, there are global flags which may
     $ stripe charge create --dollar-amounts
     Amount In Dollars: __
 
+### Cleaner Output
+
+It is common to have Stripe objects with many unused attributes.  All of these nil-valued attributes can sometimes distract from the output you really care about.
+
+In these cases, you can use the `--strip-nils` global option to clean up output significantly.
+
+This option is also congifurable in your `.stripecli` file by setting `strip_nils = true`
+
 
 
 ## General Features & Flexibility
