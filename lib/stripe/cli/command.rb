@@ -68,7 +68,7 @@ module Stripe
       end
 
       def delete klass, id
-        request klass.new( id, api_key ), :delete
+        request klass.new( id, {:api_key => api_key} ), :delete
       end
 
       def create klass, options
