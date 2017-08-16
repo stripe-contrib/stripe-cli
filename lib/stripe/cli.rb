@@ -19,8 +19,5 @@ module Stripe
       user_agent = original_request_headers(api_key)[:user_agent]
       original_request_headers(api_key).update(:user_agent => user_agent<<"/Stripe-CLI v#{Stripe::CLI::VERSION}")
     end
-    alias_method :original_request_headers, :request_headers
-    alias_method :request_headers, :cat_user_agent_string
-    private :cat_user_agent_string
   end
 end
