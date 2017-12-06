@@ -115,7 +115,7 @@ module Stripe
         @date_format = date_format
         Stripe.api_key = api_key
         Stripe.api_version = api_version unless api_version.nil?
-        Stripe.set_app_info("stripe-cli", version: "1.8.5", url: "https://github.com/stripe-contrib/stripe-cli")
+        Stripe.set_app_info("stripe-cli", version: Stripe::CLI::VERSION, url: "https://github.com/stripe-contrib/stripe-cli")
       end
 
       def handle_hash object
