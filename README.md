@@ -1,5 +1,7 @@
-<a href="http://badge.fury.io/rb/stripe-cli"><img style="float:right;" src="https://badge.fury.io/rb/stripe-cli.png" alt="Gem Version" height="18"></a>
-<a href="https://codeclimate.com/repos/52773e8fc7f3a3121a004455/feed"><img style="float:right;margin-right:10px;" src="https://codeclimate.com/repos/52773e8fc7f3a3121a004455/badges/67e5d04281479d6f8cb3/gpa.png"></a>
+<a href="http://badge.fury.io/rb/stripe-cli"><img src="https://badge.fury.io/rb/stripe-cli.png" alt="Gem Version" height="18"></a><br/>
+
+As of November 2019, Stripe has [launched](http://stripe.com/blog/stripe-cli) an official CLI. Check out [the guide](https://stripe.com/docs/stripe-cli) to learn about the features and how to get started.
+
 # Stripe::CLI
 stripe-cli is the command line interface to [Stripe](https://stripe.com).
 
